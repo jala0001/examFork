@@ -8,13 +8,17 @@
 
 <h1>K.W. Bruun & Co</h1>
 
-<form action="/login" method="get">
+<form action="/login" method="post">
     <td>Username</td> <td><input type="text" name="username"></td>
-    <td>Password</td> <td><input type="text" name="password"></td>
+    <td>Password</td> <td><input type="password" name="password"></td>
     <button type="submit">Log in</button>
 </form>
 
-<form action="/signin" method="post">
+<div th:if="${WrongPassword}" th:text="${WrongPassword}"></div>
+<div th:if="${UserDoesNotExist}" th:text="${UserDoesNotExist}"></div>
+
+
+<form action="/signIn" method="get"> <!-- ændret fra post til get -->
     <button type="submit">Sign in</button>
 </form>
 
