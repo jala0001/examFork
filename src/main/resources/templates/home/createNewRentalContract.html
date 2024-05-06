@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new rental contract</title>
+</head>
+<body>
+<h1>Create new rental contract</h1>
+<hr>
+<form action="/createNewRentalContractAction" method="post">
+    <td>Customer ID</td><td><input type="text" name="customerId"></td>
+    <td>Car ID</td><td><input type="text" name="address"></td>
+    <td>Start date</td><td><input type="text" name="startDate"></td>
+    <td>End date</td><td><input type="text" name="endDate"></td>
+    <td>Price</td><td><input type="text" name="price"></td>
+    <td>Pick up location</td><td><input type="text" name="pickUpLocation"></td>
+    <td>Condition on delivery</td><td><input type="text" name="conditionOnDelivery"></td>
+    <td>Condition upon return</td><td><input type="text" name="conditionOnDelivery"></td>
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}"> <!-- så man kan redirect -->
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

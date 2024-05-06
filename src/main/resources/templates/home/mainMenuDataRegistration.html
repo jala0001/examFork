@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data registration</title>
+</head>
+<body>
+<span th:text="'Data registation. Employee: ' + ${employeeUser.getUsername()}"></span>
+<form action="/createNewCustomer" method="get">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUser.getEmployeeUserId()}"> <!-- employeeUserId sendes med så man senere kan redirect -->
+    <button type="submit">Create new customer</button>
+</form>
+
+<form action="/createNewCar" method="get">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUser.getEmployeeUserId()}"> <!-- employeeUserId sendes med så man senere kan redirect -->
+    <button type="submit">Create new car</button>
+</form>
+
+<form action="/createRentalContract" method="get">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUser.getEmployeeUserId()}"> <!-- employeeUserId sendes med så man senere kan redirect -->
+    <button type="submit">Create new rental contract</button>
+</form>
+
+</body>
+</html>

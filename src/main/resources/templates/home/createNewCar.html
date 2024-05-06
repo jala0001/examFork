@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new car</title>
+</head>
+<body>
+<h1>Create new car</h1>
+<hr>
+<form action="/createNewCarAction" method="post">
+    <td>Frame number</td><td><input type="text" name="frameNumber"></td>
+    <td>Brand</td><td><input type="text" name="brand"></td>
+    <td>Model</td><td><input type="text" name="model"></td>
+    <td>Registration number</td><td><input type="text" name="registrationNumber"></td>
+    <input type="hidden" name="status" value="AVAILABLE"> <!-- ENUM værdi og tænker umiddelbart at bilen er available fra start når den bliver oprettet. Men det kan diskuteres -->
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}"> <!-- så man kan redirect -->
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

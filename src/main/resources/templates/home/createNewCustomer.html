@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new customer</title>
+</head>
+<body>
+<h1>Create new customer</h1>
+<hr>
+<form action="/createNewCustomerAction" method="post">
+<td>Full name</td><td><input type="text" name="name"></td>
+<td>Address</td><td><input type="text" name="address"></td>
+<td>Phone number</td><td><input type="text" name="number"></td>
+<td>E-mail</td><td><input type="text" name="email"></td>
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}"> <!-- så man kan redirect -->
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

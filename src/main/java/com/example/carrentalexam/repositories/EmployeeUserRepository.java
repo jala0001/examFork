@@ -26,4 +26,10 @@ public class EmployeeUserRepository {
         RowMapper rowMapper = new BeanPropertyRowMapper(EmployeeUser.class);
         return jdbcTemplate.query(query, rowMapper);
     }
+
+    public EmployeeUser getEmployee(int employeeId) {
+        String query = "Select * from employee_users where employee_user_id = ?;";
+        RowMapper<EmployeeUser> rowMapper = new BeanPropertyRowMapper<>(EmployeeUser.class);
+        return jdbcTemplate.queryForObject(query, rowMapper, employeeId);
+    }
 }

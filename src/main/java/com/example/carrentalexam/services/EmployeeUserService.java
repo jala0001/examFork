@@ -24,4 +24,8 @@ public class EmployeeUserService {
     public List<EmployeeUser> getAllEmployees() {
       return employeeUserRepository.getAllEmployees();
     }
+
+    public EmployeeUser getEmployee(int employeeId) {
+        return employeeUserRepository.getEmployee(employeeId);
+    }
 }

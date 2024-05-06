@@ -2,6 +2,7 @@ package com.example.carrentalexam.controllers;
 
 import com.example.carrentalexam.enums.EmployeeUserDepartment;
 import com.example.carrentalexam.models.EmployeeUser;
+import com.example.carrentalexam.services.CarService;
 import com.example.carrentalexam.services.EmployeeUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,14 @@ import java.util.List;
 @Controller
 public class EmployeeUsersController {
 
-    @Autowired
-    private EmployeeUserService employeeUserService;
+    private final EmployeeUserService employeeUserService;
+    private final CarService carService;
+
+    // Som patty sagde til vores fremlæggelse er det vigtigt at vi bruger konstruktør i stedet for autowired for at sikre immutabilitet.
+    public EmployeeUsersController(EmployeeUserService employeeUserService, CarService carService) {
+        this.employeeUserService = employeeUserService;
+        this.carService = carService;
+    }
 
     @PostMapping("/login")
     public String logIn(@RequestParam String username, @RequestParam String password,
@@ -25,6 +32,8 @@ public class EmployeeUsersController {
         for (int i = 0; i < employeeUsers.size(); i++) {
             if (employeeUsers.get(i).getUsername().equals(username)) {
                 if (employeeUsers.get(i).getPassword().equals(password)) {
+                    int employeeId = employeeUsers.get(i).getEmployeeUserId();
+                    model.addAttribute(employeeUserService.getEmployee(employeeId));
                     return "home/mainMenu";
                 }
                 else {
@@ -47,6 +56,13 @@ public class EmployeeUsersController {
                                @RequestParam EmployeeUserDepartment employeeUserDepartment) {
         employeeUserService.addEmployee(username, password, employeeUserDepartment);
         return "redirect:/";
+    }
+
+    @GetMapping("/mainMenuDataRegistration")
+    public String dataRegistration(@RequestParam int employeeUserId, Model model) {
+        model.addAttribute(employeeUserService.getEmployee(employeeUserId)); // for at få brugerens navn til overskriften
+        model.addAttribute(carService.getAllCars()); // Giver medarbejderen overblik over alle registrerede biler
+        return "home/mainMenuDataRegistration";
     }
 
 
