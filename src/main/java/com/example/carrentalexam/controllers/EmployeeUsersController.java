@@ -65,5 +65,12 @@ public class EmployeeUsersController {
         return "home/mainMenuDataRegistration";
     }
 
+    @GetMapping("/mainMenuBusinessDeveloper")
+    public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
+        model.addAttribute(employeeUserService.getEmployee(employeeUserId)); // for at få brugerens navn til overskriften
+        model.addAttribute(carService.getAllCars()); // Giver medarbejderen overblik over alle registrerede biler
+        return "home/mainMenuBusinessDeveloper";
+    }
+
 
 }
