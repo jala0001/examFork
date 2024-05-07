@@ -1,5 +1,7 @@
 package com.example.carrentalexam.controllers;
 
+import com.example.carrentalexam.services.CarService;
+import com.example.carrentalexam.services.CustomerService;
 import com.example.carrentalexam.services.RentalContractService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,14 +14,21 @@ import java.time.LocalDate;
 @Controller
 public class RentalContractsController {
     private final RentalContractService rentalContractService;
+    private final CustomerService customerService;
+    private final CarService carService;
 
-    public RentalContractsController(RentalContractService rentalContractService) {
+    public RentalContractsController(RentalContractService rentalContractService, CustomerService customerService,
+                                     CarService carService) {
         this.rentalContractService = rentalContractService;
+        this.customerService = customerService;
+        this.carService = carService;
     }
 
     @GetMapping("/createRentalContract")
     public String createRentalContract(@RequestParam int employeeUserId, Model model) {
         model.addAttribute("employeeUserId", employeeUserId);
+        model.addAttribute("customers", customerService.getAllCustomers()); // så vi har et overblik over eksisterende kunder når man opretter en lejekontrakt
+        model.addAttribute("cars", carService.getAllCars()); // samme som overstående linje, men bare med biler istedet for kunder.
         return "home/createNewRentalContract";
     }
 

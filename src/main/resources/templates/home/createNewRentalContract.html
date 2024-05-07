@@ -8,15 +8,42 @@
 <h1>Create new rental contract</h1>
 <hr>
 <form action="/createNewRentalContractAction" method="post">
-    <td>Customer ID</td><td><input type="text" name="customerId"></td>
-    <td>Car ID</td><td><input type="text" name="carId"></td>
-    <td>Start date</td><td><input type="date" name="startDate"></td>
-    <td>End date</td><td><input type="date" name="endDate"></td>
-    <td>Price</td><td><input type="text" name="price"></td>
-    <td>Pick up location</td><td><input type="text" name="pickUpLocation"></td>
-    <td>Condition on delivery</td><td><input type="text" name="conditionOnDelivery"></td>
-    <input type="hidden" name="conditionUponReturn" value="to be determined"> <!-- Fast værdi da vi først kan tilføje data når bilen bliver returneret -->
-    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}"> <!-- så man kan redirect -->
+    <div>
+        <label for="customerId">Customer:</label>
+        <select id="customerId" name="customerId">
+            <option value="">--Vælg en kunde--</option>
+            <option th:each="customer : ${customers}" th:value="${customer.customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="carId">Car:</label>
+        <select id="carId" name="carId">
+            <option value="">--Vælg en bil--</option>
+            <option th:each="car : ${cars}" th:value="${car.carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option>
+        </select>
+    </div>
+    <div>
+        <label for="startDate">Start date:</label>
+        <input type="date" id="startDate" name="startDate">
+    </div>
+    <div>
+        <label for="endDate">End date:</label>
+        <input type="date" id="endDate" name="endDate">
+    </div>
+    <div>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price">
+    </div>
+    <div>
+        <label for="pickUpLocation">Pick up location:</label>
+        <input type="text" id="pickUpLocation" name="pickUpLocation">
+    </div>
+    <div>
+        <label for="conditionOnDelivery">Condition on delivery:</label>
+        <input type="text" id="conditionOnDelivery" name="conditionOnDelivery">
+    </div>
+    <input type="hidden" name="conditionUponReturn" value="to be determined">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
     <button type="submit">Submit</button>
 </form>
 </body>
