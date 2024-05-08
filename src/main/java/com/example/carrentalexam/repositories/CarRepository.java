@@ -25,4 +25,9 @@ public class CarRepository {
                 "values(?, ?, ?, ?, ?);";
         jdbcTemplate.update(query, frameNumber, brand, model, registrationNumber, status);
     }
+
+    public void updateCarStatus(int carId, String status) { // NY
+        String query = "UPDATE cars SET status = ? WHERE car_id = ?";
+        jdbcTemplate.update(query, status, carId);
+    }
 }

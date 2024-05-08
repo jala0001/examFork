@@ -2,8 +2,10 @@ package com.example.carrentalexam.controllers;
 
 import com.example.carrentalexam.enums.EmployeeUserDepartment;
 import com.example.carrentalexam.models.EmployeeUser;
+import com.example.carrentalexam.models.RentalContract;
 import com.example.carrentalexam.services.CarService;
 import com.example.carrentalexam.services.EmployeeUserService;
+import com.example.carrentalexam.services.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +20,14 @@ public class EmployeeUsersController {
 
     private final EmployeeUserService employeeUserService;
     private final CarService carService;
+    private final RentalContractService rentalContractService;
 
     // Som patty sagde til vores fremlæggelse er det vigtigt at vi bruger konstruktør i stedet for autowired for at sikre immutabilitet.
-    public EmployeeUsersController(EmployeeUserService employeeUserService, CarService carService) {
+    public EmployeeUsersController(EmployeeUserService employeeUserService, CarService carService,
+                                   RentalContractService rentalContractService) {
         this.employeeUserService = employeeUserService;
         this.carService = carService;
+        this.rentalContractService = rentalContractService; // NY
     }
 
     @PostMapping("/login")
@@ -65,12 +70,25 @@ public class EmployeeUsersController {
         return "home/mainMenuDataRegistration";
     }
 
-    @GetMapping("/mainMenuBusinessDeveloper")
+   /* @GetMapping("/mainMenuBusinessDeveloper")
     public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
         model.addAttribute(employeeUserService.getEmployee(employeeUserId)); // for at få brugerens navn til overskriften
         model.addAttribute(carService.getAllCars()); // Giver medarbejderen overblik over alle registrerede biler
         return "home/mainMenuBusinessDeveloper";
     }
 
+    */
+
+    @GetMapping("/mainMenuBusinessDeveloper") // NY
+    public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
+        model.addAttribute(employeeUserService.getEmployee(employeeUserId));
+        model.addAttribute("employeeUserId", employeeUserId);
+        // int rentedCarsCount = rentalContractService.getRentedCarsCount();
+        List<RentalContract> rentedCars = rentalContractService.getRentedCarsCount();
+        double totalRevenue = rentalContractService.getTotalRevenue();
+        model.addAttribute("rentedCarsCount", rentedCars.size());
+        model.addAttribute("totalRevenue", totalRevenue);
+        return "home/mainMenuBusinessDeveloper";
+    }
 
 }
