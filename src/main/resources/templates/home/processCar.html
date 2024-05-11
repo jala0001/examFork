@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Process car</title>
+</head>
+<body>
+<table>
+    <thead><td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td></thead>
+    <tr>
+        <td th:text="${car.carId}"></td>
+        <td th:text="${car.frameNumber}"></td>
+        <td th:text="${car.brand}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.registrationNumber}"></td>
+        <td th:text="${car.status}"></td>
+        <td>
+            <form action="/processCarYes" method="get">
+                <input type="hidden" name="carId" th:value="${car.carId}">
+                <button type="submit">Click here if the car has one or more damages</button>
+            </form>
+        </td>
+        <td>
+            <form action="/processCarNo" method="post">
+                <input type="hidden" name="carId" th:value="${car.carId}">
+                <button type="submit">Click here if the car has no damages</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

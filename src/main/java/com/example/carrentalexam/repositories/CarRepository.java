@@ -30,4 +30,17 @@ public class CarRepository {
         String query = "UPDATE cars SET status = ? WHERE car_id = ?";
         jdbcTemplate.update(query, status, carId);
     }
+
+
+    public Car getAllCarsReturned(int rentalContractCarId) {
+        String query = "SELECT * FROM cars WHERE car_id = ? AND status = 'RENTED';"; // tilføjet status = RENTED, så bilen kun kommer frem før den er blevet processed.
+        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
+        return jdbcTemplate.queryForObject(query, rowMapper, rentalContractCarId);
+    }
+
+    public Car getCar(int carId) {
+        String query = "SELECT * FROM cars WHERE car_id = ?;";
+        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
+        return jdbcTemplate.queryForObject(query, rowMapper, carId);
+    }
 }

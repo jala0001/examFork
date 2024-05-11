@@ -39,4 +39,8 @@ public class RentalContractService {
     public double getTotalRevenue() { // NY
         return rentalContractRepository.getTotalRevenue();
     }
+
+    public List<RentalContract> getAllRentalContractWhereTheCarHasBeenReturned() {
+        return rentalContractRepository.getAllRentalContractWhereTheCarHasBeenReturned();
+    }
 }

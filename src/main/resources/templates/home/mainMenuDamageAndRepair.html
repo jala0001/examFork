@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Damage and repair</title>
+</head>
+<body>
+<h1>Damage and repair</h1>
+<hr>
+<p>List of cars that are returned and ready to be processed: </p>
+<table>
+    <thead><td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td></thead>
+    <tr th:each="car : ${rentalContractCarsReturned}">
+        <td th:text="${car.carId}"></td>
+        <td th:text="${car.frameNumber}"></td>
+        <td th:text="${car.brand}"></td>
+        <td th:text="${car.model}"></td>
+        <td th:text="${car.registrationNumber}"></td>
+        <td th:text="${car.status}"></td>
+        <td>
+            <form action="/processCarForDamages" method="get">
+                <input type="hidden" name="carId" th:value="${car.carId}">
+                <button type="submit">Process this car</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

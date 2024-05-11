@@ -1,5 +1,7 @@
 package com.example.carrentalexam.repositories;
 
+import com.example.carrentalexam.enums.CarStatus;
+import com.example.carrentalexam.models.Car;
 import com.example.carrentalexam.models.RentalContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -26,15 +28,9 @@ public class RentalContractRepository {
         jdbcTemplate.update(query, customerId, carId, startDate, endDate, price, pickUpLocation, conditionOnDelivery, conditionUponReturn);
     }
 
-    /* public int getRentedCarsCount() { // NY
-        String query = "SELECT COUNT(*) FROM rental_contracts";
-        return jdbcTemplate.queryForObject(query, Integer.class);
-    }
-
-     */
 
     public List<RentalContract> getRentedCarsCount() { // NY
-        String query = "SELECT * FROM rental_contracts";
+        String query = "SELECT * FROM cars where status = 'RENTED'";
         RowMapper rowMapper = new BeanPropertyRowMapper(RentalContract.class);
         return jdbcTemplate.query(query, rowMapper);
     }
@@ -43,5 +39,11 @@ public class RentalContractRepository {
     public double getTotalRevenue() { // NY
         String query = "SELECT SUM(price) FROM rental_contracts";
         return jdbcTemplate.queryForObject(query, Double.class);
+    }
+
+    public List<RentalContract> getAllRentalContractWhereTheCarHasBeenReturned() {
+        String query = "SELECT * FROM rental_contracts where end_date < curdate();";
+        RowMapper rowMapper = new BeanPropertyRowMapper(RentalContract.class);
+        return jdbcTemplate.query(query, rowMapper);
     }
 }

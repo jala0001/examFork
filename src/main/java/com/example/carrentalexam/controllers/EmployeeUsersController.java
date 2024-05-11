@@ -1,6 +1,7 @@
 package com.example.carrentalexam.controllers;
 
 import com.example.carrentalexam.enums.EmployeeUserDepartment;
+import com.example.carrentalexam.models.Car;
 import com.example.carrentalexam.models.EmployeeUser;
 import com.example.carrentalexam.models.RentalContract;
 import com.example.carrentalexam.services.CarService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -70,14 +72,19 @@ public class EmployeeUsersController {
         return "home/mainMenuDataRegistration";
     }
 
-   /* @GetMapping("/mainMenuBusinessDeveloper")
-    public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
-        model.addAttribute(employeeUserService.getEmployee(employeeUserId)); // for at få brugerens navn til overskriften
-        model.addAttribute(carService.getAllCars()); // Giver medarbejderen overblik over alle registrerede biler
-        return "home/mainMenuBusinessDeveloper";
-    }
+   @GetMapping("/mainMenuDamageAndRepair")
+   public String damageAndRepair(@RequestParam int employeeUserId, Model model) {
+        List<RentalContract> rentalContractsReturned = rentalContractService.getAllRentalContractWhereTheCarHasBeenReturned();
+        List<Car> carsFromRentalContractsReturned = new ArrayList<>();
+        for (int i = 0; i < rentalContractsReturned.size(); i++) {
+            carsFromRentalContractsReturned.add(carService.getAllCarsReturned(rentalContractsReturned.get(i).getCarId()));
+        }
+        model.addAttribute("rentalContractCarsReturned", carsFromRentalContractsReturned);
+        return "home/mainMenuDamageAndRepair";
 
-    */
+   }
+
+
 
     @GetMapping("/mainMenuBusinessDeveloper") // NY
     public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
