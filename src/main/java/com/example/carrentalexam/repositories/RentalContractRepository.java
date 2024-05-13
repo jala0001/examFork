@@ -46,4 +46,11 @@ public class RentalContractRepository {
         RowMapper rowMapper = new BeanPropertyRowMapper(RentalContract.class);
         return jdbcTemplate.query(query, rowMapper);
     }
+
+    public List<RentalContract> getAllRentalContracts() {
+        String query = "select * from rental_contracts;";
+        RowMapper rowMapper = new BeanPropertyRowMapper(RentalContract.class);
+        return jdbcTemplate.query(query, rowMapper);
+
+    }
 }

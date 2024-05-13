@@ -29,4 +29,12 @@ public class CarService {
     public Car getCar(int carId) {
         return carRepository.getCar(carId);
     }
+
+    public void changeCarToAvailable(int carId) {
+        carRepository.changeCarToAvailable(carId);
+    }
+
+    public void changeCarToMaintenance(int carId) {
+        carRepository.changeCarToMaintenance(carId);
+    }
 }

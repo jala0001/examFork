@@ -43,4 +43,8 @@ public class RentalContractService {
     public List<RentalContract> getAllRentalContractWhereTheCarHasBeenReturned() {
         return rentalContractRepository.getAllRentalContractWhereTheCarHasBeenReturned();
     }
+
+    public List<RentalContract> getAllRentalContracts() {
+        return rentalContractRepository.getAllRentalContracts();
+    }
 }

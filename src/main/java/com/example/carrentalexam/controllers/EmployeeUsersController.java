@@ -76,11 +76,30 @@ public class EmployeeUsersController {
    public String damageAndRepair(@RequestParam int employeeUserId, Model model) {
         List<RentalContract> rentalContractsReturned = rentalContractService.getAllRentalContractWhereTheCarHasBeenReturned();
         List<Car> carsFromRentalContractsReturned = new ArrayList<>();
+        int rentalContractId = 0; // så vi kan lave en betingelse i vores html i tilfælde af at der ikke er nogen biler som kræver opmærksomhed.
         for (int i = 0; i < rentalContractsReturned.size(); i++) {
-            carsFromRentalContractsReturned.add(carService.getAllCarsReturned(rentalContractsReturned.get(i).getCarId()));
+           Car car = carService.getCar(rentalContractsReturned.get(i).getCarId());
+           rentalContractId = rentalContractsReturned.get(i).getRentalContractId(); // så vi også har adgang til rentalContractId så vi kan lave damages til biler.
+           if (car != null) {
+               carsFromRentalContractsReturned.add(car);
+           }
+       }
+        List<RentalContract> allRentalContracts = rentalContractService.getAllRentalContracts();
+        List<Car> carsInMaintenance = new ArrayList<>();
+        for (int i = 0; i < allRentalContracts.size(); i++) {
+            Car car = carService.getCar(allRentalContracts.get(i).getCarId());
+            if (car != null) {
+                if (car.getStatus().equals("MAINTENANCE")) {
+                    carsInMaintenance.add(car);
+                }
+            }
         }
-        model.addAttribute("rentalContractCarsReturned", carsFromRentalContractsReturned);
-        return "home/mainMenuDamageAndRepair";
+       model.addAttribute("rentalContractCarsReturned", carsFromRentalContractsReturned);
+       model.addAttribute("carsInMaintenance", carsInMaintenance);
+       model.addAttribute("rentalContractId", rentalContractId);
+       model.addAttribute("employeeUserId", employeeUserId);
+
+       return "home/mainMenuDamageAndRepair";
 
    }
 

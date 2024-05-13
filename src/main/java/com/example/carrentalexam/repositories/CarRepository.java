@@ -3,6 +3,7 @@ package com.example.carrentalexam.repositories;
 import com.example.carrentalexam.models.Car;
 import com.example.carrentalexam.models.EmployeeUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -38,9 +39,32 @@ public class CarRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, rentalContractCarId);
     }
 
-    public Car getCar(int carId) {
+   /* public Car getCar(int carId) {
         String query = "SELECT * FROM cars WHERE car_id = ?;";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return jdbcTemplate.queryForObject(query, rowMapper, carId);
+    }
+
+    */
+
+    public Car getCar(int carId) {
+        String query = "SELECT * FROM cars WHERE car_id = ? AND status = 'RENTED';";
+        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
+        try {
+            return jdbcTemplate.queryForObject(query, rowMapper, carId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;  // Returnerer null, hvis der ikke findes nogen bil med det specificerede ID
+        }
+    }
+
+
+    public void changeCarToAvailable(int carId) {
+        String query = "update cars set status = 'AVAILABLE' where car_id = ?;";
+        jdbcTemplate.update(query, carId);
+    }
+
+    public void changeCarToMaintenance(int carId) {
+        String query = "update cars set status = 'MAINTENANCE' where car_id = ?;";
+        jdbcTemplate.update(query, carId);
     }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create damage report</title>
+</head>
+<body>
+<h1>Create damage report</h1>
+<table>
+    <thead><td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td></thead>
+    <tr>
+<td th:text="${car.carId}"></td>
+<td th:text="${car.frameNumber}"></td>
+<td th:text="${car.brand}"></td>
+<td th:text="${car.model}"></td>
+<td th:text="${car.registrationNumber}"></td>
+<td th:text="${car.status}"></td>
+    </tr>
+</table>
+<hr>
+<td>Create a damage report to the car above</td>
+<br>
+<form action="/processCarYesAction" method="post">
+<td>Rental contract ID<input type="text" name="rentalContractId" th:value="${rentalContractId}" readonly></td> <!-- brugeren ser rental contract ID men kan ikke ændre det. -->
+<td>Damage description<input type="text" name="descriptionOfDamage"></td>
+<td>Repair cost<input type="number" name="repairCost" min="0" max="9999999" required></td>
+<input type="hidden" name="status" value="REPORTED">
+<input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+<input type="hidden" name="carId" th:value="${car.carId}">
+    <button type="submit">submit damage report</button>
+    <td th:if="${!firstReport}">Damage report has been created.</td>
+    <td th:if="${!firstReport}">You can still create more reports on the same car.</td>
+</form>
+<hr>
+<form th:if="${!firstReport}" action="/processCarComplete" method="post">
+    <input type="hidden" name="carId" th:value="${car.carId}">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <td>If you don't have any other reports to submit, then you can press here: <button type="submit">Go back to main menu</button></td>
+</form>
+</body>
+</html>

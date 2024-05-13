@@ -8,7 +8,8 @@
 <h1>Damage and repair</h1>
 <hr>
 <p>List of cars that are returned and ready to be processed: </p>
-<table>
+<td th:if="${rentalContractCarsReturned.isEmpty()}">There is no cars that needs your attention</td>
+<table th:if="${!rentalContractCarsReturned.isEmpty()}">
     <thead><td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td></thead>
     <tr th:each="car : ${rentalContractCarsReturned}">
         <td th:text="${car.carId}"></td>
@@ -20,10 +21,16 @@
         <td>
             <form action="/processCarForDamages" method="get">
                 <input type="hidden" name="carId" th:value="${car.carId}">
+                <input type="hidden" name="rentalContractId" th:value="${rentalContractId}">
+                <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
                 <button type="submit">Process this car</button>
             </form>
         </td>
     </tr>
+</table>
+
+<table>
+    <thead><td>Car ID</td></thead>
 </table>
 
 </body>
