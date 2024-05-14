@@ -20,6 +20,11 @@ public class CarRepository {
         RowMapper rowMapper = new BeanPropertyRowMapper(Car.class);
         return jdbcTemplate.query(query, rowMapper);
     }
+    public List<Car> getAllCarsThatAreAvailabe() {
+        String query = "SELECT * FROM cars where status = 'AVAILABLE';";
+        RowMapper rowMapper = new BeanPropertyRowMapper(Car.class);
+        return jdbcTemplate.query(query, rowMapper);
+    }
 
     public void createNewCar(String frameNumber, String brand, String model, String registrationNumber, String status) {
         String query = "insert into cars(frame_number, brand, model, registration_number, status)" +
@@ -56,6 +61,15 @@ public class CarRepository {
             return null;  // Returnerer null, hvis der ikke findes nogen bil med det specificerede ID
         }
     }
+    public Car getCarMaintenance(int carId) {
+        String query = "select * from cars where car_id = ? and status = 'MAINTENANCE';";
+        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
+        try {
+            return jdbcTemplate.queryForObject(query, rowMapper, carId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 
 
     public void changeCarToAvailable(int carId) {
@@ -67,4 +81,7 @@ public class CarRepository {
         String query = "update cars set status = 'MAINTENANCE' where car_id = ?;";
         jdbcTemplate.update(query, carId);
     }
+
+
+
 }

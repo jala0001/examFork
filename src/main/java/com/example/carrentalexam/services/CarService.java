@@ -37,4 +37,12 @@ public class CarService {
     public void changeCarToMaintenance(int carId) {
         carRepository.changeCarToMaintenance(carId);
     }
+
+    public Car getCarMaintenance(int carId) {
+        return carRepository.getCarMaintenance(carId);
+    }
+
+    public List<Car> getAllCarsThatAreAvailable() {
+        return carRepository.getAllCarsThatAreAvailabe();
+    }
 }

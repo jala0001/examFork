@@ -28,7 +28,7 @@ public class RentalContractsController {
     public String createRentalContract(@RequestParam int employeeUserId, Model model) {
         model.addAttribute("employeeUserId", employeeUserId);
         model.addAttribute("customers", customerService.getAllCustomers()); // så vi har et overblik over eksisterende kunder når man opretter en lejekontrakt
-        model.addAttribute("cars", carService.getAllCars()); // samme som overstående linje, men bare med biler istedet for kunder.
+        model.addAttribute("cars", carService.getAllCarsThatAreAvailable()); // så man ikke kan leje en bil som er udlejet i forvejen
         return "home/createNewRentalContract";
     }
 

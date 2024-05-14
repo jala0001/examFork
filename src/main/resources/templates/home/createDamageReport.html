@@ -23,7 +23,7 @@
 <form action="/processCarYesAction" method="post">
 <td>Rental contract ID<input type="text" name="rentalContractId" th:value="${rentalContractId}" readonly></td> <!-- brugeren ser rental contract ID men kan ikke ændre det. -->
 <td>Damage description<input type="text" name="descriptionOfDamage"></td>
-<td>Repair cost<input type="number" name="repairCost" min="0" max="9999999" required></td>
+<td>Repair cost<input type="number" name="repairCosts" min="0" max="9999999" required></td>
 <input type="hidden" name="status" value="REPORTED">
 <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
 <input type="hidden" name="carId" th:value="${car.carId}">

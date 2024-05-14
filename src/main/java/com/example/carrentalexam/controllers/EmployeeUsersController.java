@@ -1,10 +1,10 @@
 package com.example.carrentalexam.controllers;
 
+import com.example.carrentalexam.enums.CarStatus;
 import com.example.carrentalexam.enums.EmployeeUserDepartment;
-import com.example.carrentalexam.models.Car;
-import com.example.carrentalexam.models.EmployeeUser;
-import com.example.carrentalexam.models.RentalContract;
+import com.example.carrentalexam.models.*;
 import com.example.carrentalexam.services.CarService;
+import com.example.carrentalexam.services.DamageService;
 import com.example.carrentalexam.services.EmployeeUserService;
 import com.example.carrentalexam.services.RentalContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,15 @@ public class EmployeeUsersController {
     private final EmployeeUserService employeeUserService;
     private final CarService carService;
     private final RentalContractService rentalContractService;
+    private final DamageService damageService;
 
     // Som patty sagde til vores fremlæggelse er det vigtigt at vi bruger konstruktør i stedet for autowired for at sikre immutabilitet.
     public EmployeeUsersController(EmployeeUserService employeeUserService, CarService carService,
-                                   RentalContractService rentalContractService) {
+                                   RentalContractService rentalContractService, DamageService damageService) {
         this.employeeUserService = employeeUserService;
         this.carService = carService;
         this.rentalContractService = rentalContractService; // NY
+        this.damageService = damageService;
     }
 
     @PostMapping("/login")
@@ -72,36 +74,40 @@ public class EmployeeUsersController {
         return "home/mainMenuDataRegistration";
     }
 
-   @GetMapping("/mainMenuDamageAndRepair")
-   public String damageAndRepair(@RequestParam int employeeUserId, Model model) {
+    @GetMapping("/mainMenuDamageAndRepair")
+    public String damageAndRepair(@RequestParam int employeeUserId, Model model) {
         List<RentalContract> rentalContractsReturned = rentalContractService.getAllRentalContractWhereTheCarHasBeenReturned();
-        List<Car> carsFromRentalContractsReturned = new ArrayList<>();
-        int rentalContractId = 0; // så vi kan lave en betingelse i vores html i tilfælde af at der ikke er nogen biler som kræver opmærksomhed.
-        for (int i = 0; i < rentalContractsReturned.size(); i++) {
-           Car car = carService.getCar(rentalContractsReturned.get(i).getCarId());
-           rentalContractId = rentalContractsReturned.get(i).getRentalContractId(); // så vi også har adgang til rentalContractId så vi kan lave damages til biler.
-           if (car != null) {
-               carsFromRentalContractsReturned.add(car);
-           }
-       }
-        List<RentalContract> allRentalContracts = rentalContractService.getAllRentalContracts();
-        List<Car> carsInMaintenance = new ArrayList<>();
-        for (int i = 0; i < allRentalContracts.size(); i++) {
-            Car car = carService.getCar(allRentalContracts.get(i).getCarId());
+        List<CarWithContract> carsFromRentalContractsReturned = new ArrayList<>();
+
+        for (RentalContract contract : rentalContractsReturned) {
+            Car car = carService.getCar(contract.getCarId());
             if (car != null) {
-                if (car.getStatus().equals("MAINTENANCE")) {
-                    carsInMaintenance.add(car);
-                }
+                carsFromRentalContractsReturned.add(new CarWithContract(car, contract.getRentalContractId()));
             }
         }
-       model.addAttribute("rentalContractCarsReturned", carsFromRentalContractsReturned);
-       model.addAttribute("carsInMaintenance", carsInMaintenance);
-       model.addAttribute("rentalContractId", rentalContractId);
-       model.addAttribute("employeeUserId", employeeUserId);
 
-       return "home/mainMenuDamageAndRepair";
+        List<RentalContract> allRentalContracts = rentalContractService.getAllRentalContracts();
+        List<CarWithContract> carsInMaintenanceWithDamages = new ArrayList<>();
 
-   }
+        for (RentalContract contract : allRentalContracts) {
+            Car car = carService.getCarMaintenance(contract.getCarId());
+            if (car != null) {
+                List<Damage> damages = damageService.getDamagesByContractId(contract.getRentalContractId());
+                carsInMaintenanceWithDamages.add(new CarWithContract(car, contract.getRentalContractId(), damages));
+            }
+        }
+
+
+
+
+
+        model.addAttribute("rentalContractCarsReturned", carsFromRentalContractsReturned);
+        model.addAttribute("carsInMaintenanceWithDamages", carsInMaintenanceWithDamages);
+        model.addAttribute("employeeUserId", employeeUserId);
+
+        return "home/mainMenuDamageAndRepair";
+    }
+
 
 
 

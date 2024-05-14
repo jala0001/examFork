@@ -40,9 +40,9 @@ public class DamagesController {
 
     @PostMapping("/processCarYesAction")
     public String carHasDamages(@RequestParam int rentalContractId, @RequestParam String descriptionOfDamage,
-                                @RequestParam double repairCost, @RequestParam String status,
+                                @RequestParam double repairCosts, @RequestParam String status,
                                 @RequestParam int employeeUserId, @RequestParam int carId) {
-        damageService.createDamageReport(rentalContractId, descriptionOfDamage, repairCost, status);
+        damageService.createDamageReport(rentalContractId, descriptionOfDamage, repairCosts, status);
         firstReport = false;
         return "redirect:/processCarYes?carId=" + carId + "&rentalContractId=" + rentalContractId + "&employeeUserId=" + employeeUserId;
     }
