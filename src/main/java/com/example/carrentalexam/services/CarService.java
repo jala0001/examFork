@@ -1,7 +1,6 @@
 package com.example.carrentalexam.services;
 
 import com.example.carrentalexam.models.Car;
-import com.example.carrentalexam.models.RentalContract;
 import com.example.carrentalexam.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,8 @@ public class CarService {
         return carRepository.getAllCarsReturned(rentalContractCarId);
     }
 
-    public Car getCar(int carId) {
-        return carRepository.getCar(carId);
+    public Car getCarRented(int carId) {
+        return carRepository.getCarRented(carId);
     }
 
     public void changeCarToAvailable(int carId) {

@@ -26,4 +26,9 @@ public class DamageRepository {
         RowMapper rowMapper = new BeanPropertyRowMapper(Damage.class);
         return jdbcTemplate.query(query, rowMapper, rentalContractId);
     }
+
+    public void changeDamageFromReportedToProcessed(int damageId) {
+        String query = "update damages set damage_status = 'PROCESSED' where damage_id = ?;";
+        jdbcTemplate.update(query, damageId);
+    }
 }

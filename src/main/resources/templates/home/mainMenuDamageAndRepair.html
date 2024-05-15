@@ -3,64 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <title>Damage and repair</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 2200px;
+            margin-top: 20px;
+        }
+        .table-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 48%;
+            margin-right: 10px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        hr {
+            width: 100%;
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
 <h1>Damage and repair</h1>
-<hr>
-<p>List of cars that are returned and ready to be processed: </p>
-<td th:if="${rentalContractCarsReturned.isEmpty()}">There is no cars that needs your attention</td>
-
-<table th:if="${!rentalContractCarsReturned.isEmpty()}">
-    <thead>
-    <tr>
-        <td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td><td>Action</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="carWithContract : ${rentalContractCarsReturned}">
-        <td th:text="${carWithContract.car.carId}"></td> <!-- har lavet en klasse som både har rental_contract_id samt Car's attributer. -->
-        <td th:text="${carWithContract.car.frameNumber}"></td>
-        <td th:text="${carWithContract.car.brand}"></td>
-        <td th:text="${carWithContract.car.model}"></td>
-        <td th:text="${carWithContract.car.registrationNumber}"></td>
-        <td th:text="${carWithContract.car.status}"></td>
-        <td>
-            <form action="/processCarForDamages" method="get">
-                <input type="hidden" name="carId" th:value="${carWithContract.car.carId}">
-                <input type="hidden" name="rentalContractId" th:value="${carWithContract.rentalContractId}">
-                <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
-                <button type="submit">Process this car</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
-<table>
-    <p>Cars in maintenance and their damages: </p>
-    <thead>
-    <tr>
-        <td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td><td>Damage Details</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="carWithContract : ${carsInMaintenanceWithDamages}">
-        <td th:text="${carWithContract.car.carId}"></td>
-        <td th:text="${carWithContract.car.frameNumber}"></td>
-        <td th:text="${carWithContract.car.brand}"></td>
-        <td th:text="${carWithContract.car.model}"></td>
-        <td th:text="${carWithContract.car.registrationNumber}"></td>
-        <td th:text="${carWithContract.car.status}"></td>
-        <td>
-            <div th:each="damage : ${carWithContract.damages}">
-                <p th:text="'Description: ' + ${damage.descriptionOfDamage} + ', Cost: ' + ${damage.repairCosts}"></p>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
+<div class="container">
+    <div class="table-container">
+        <p>List of cars that are returned and ready to be processed:</p>
+        <table>
+            <thead>
+            <tr>
+                <td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td><td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="carWithContract : ${rentalContractCarsReturned}">
+                <td th:text="${carWithContract.car.carId}"></td>
+                <td th:text="${carWithContract.car.frameNumber}"></td>
+                <td th:text="${carWithContract.car.brand}"></td>
+                <td th:text="${carWithContract.car.model}"></td>
+                <td th:text="${carWithContract.car.registrationNumber}"></td>
+                <td th:text="${carWithContract.car.status}"></td>
+                <td>
+                    <form action="/processCarForDamages" method="get">
+                        <input type="hidden" name="carId" th:value="${carWithContract.car.carId}">
+                        <input type="hidden" name="rentalContractId" th:value="${carWithContract.rentalContractId}">
+                        <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+                        <button type="submit">Process this car</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="table-container">
+        <p>Cars in maintenance and their damages:</p>
+        <table>
+            <thead>
+            <tr>
+                <td>Car ID</td><td>Frame number</td><td>Brand</td><td>Model</td><td>Registration number</td><td>Status</td><td>Damage Details</td><td>Finalize Car</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="carWithContract : ${carsInMaintenanceWithDamages}">
+                <td th:text="${carWithContract.car.carId}"></td>
+                <td th:text="${carWithContract.car.frameNumber}"></td>
+                <td th:text="${carWithContract.car.brand}"></td>
+                <td th:text="${carWithContract.car.model}"></td>
+                <td th:text="${carWithContract.car.registrationNumber}"></td>
+                <td th:text="${carWithContract.car.status}"></td>
+                <td>
+                    <div th:each="damage : ${carWithContract.damages}">
+                        <p th:text="'Description: ' + ${damage.descriptionOfDamage} + ', Cost: ' + ${damage.repairCosts} + 'kr. Status: ' + ${damage.damageStatus}"></p>
+                        <form action="/damageReportedToProcessed" method="post">
+                            <input type="hidden" name="damageId" th:value="${damage.damageId}">
+                            <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+                            <button type="submit">Press here when the damage is repaired</button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <form action="/processCarNo" method="post">
+                        <input type="hidden" name="carId" th:value="${carWithContract.car.carId}">
+                        <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+                        <button type="submit">Click here when all damages are repaired</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

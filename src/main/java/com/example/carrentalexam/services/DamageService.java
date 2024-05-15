@@ -18,4 +18,10 @@ public class DamageService {
     public List<Damage> getDamagesByContractId(int rentalContractId) {
         return damageRepository.getDamagesByContractId(rentalContractId);
     }
+
+    public void changeDamageFromReportedToProcessed(int damageId) {
+        damageRepository.changeDamageFromReportedToProcessed(damageId);
+    }
+
+
 }

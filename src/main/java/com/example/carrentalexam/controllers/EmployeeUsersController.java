@@ -1,13 +1,11 @@
 package com.example.carrentalexam.controllers;
 
-import com.example.carrentalexam.enums.CarStatus;
 import com.example.carrentalexam.enums.EmployeeUserDepartment;
 import com.example.carrentalexam.models.*;
 import com.example.carrentalexam.services.CarService;
 import com.example.carrentalexam.services.DamageService;
 import com.example.carrentalexam.services.EmployeeUserService;
 import com.example.carrentalexam.services.RentalContractService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,7 +78,7 @@ public class EmployeeUsersController {
         List<CarWithContract> carsFromRentalContractsReturned = new ArrayList<>();
 
         for (RentalContract contract : rentalContractsReturned) {
-            Car car = carService.getCar(contract.getCarId());
+            Car car = carService.getCarRented(contract.getCarId());
             if (car != null) {
                 carsFromRentalContractsReturned.add(new CarWithContract(car, contract.getRentalContractId()));
             }

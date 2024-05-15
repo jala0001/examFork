@@ -1,7 +1,6 @@
 package com.example.carrentalexam.repositories;
 
 import com.example.carrentalexam.models.Car;
-import com.example.carrentalexam.models.EmployeeUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -52,7 +51,7 @@ public class CarRepository {
 
     */
 
-    public Car getCar(int carId) {
+    public Car getCarRented(int carId) {
         String query = "SELECT * FROM cars WHERE car_id = ? AND status = 'RENTED';";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         try {

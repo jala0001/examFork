@@ -23,7 +23,7 @@ public class DamagesController {
 
     @GetMapping("/processCarForDamages")
     public String processCarForDamages(@RequestParam int carId, @RequestParam int rentalContractId ,@RequestParam int employeeUserId ,Model model) {
-        model.addAttribute("car", carService.getCar(carId));
+        model.addAttribute("car", carService.getCarRented(carId));
         model.addAttribute("rentalContractId", rentalContractId);
         model.addAttribute("employeeUserId", employeeUserId);
         return "home/processCar";
@@ -31,7 +31,7 @@ public class DamagesController {
 
     @GetMapping("/processCarYes")
     public String carHasDamages(@RequestParam int carId, @RequestParam int rentalContractId ,@RequestParam int employeeUserId, Model model) {
-        model.addAttribute("car", carService.getCar(carId));
+        model.addAttribute("car", carService.getCarRented(carId));
         model.addAttribute("rentalContractId", rentalContractId);
         model.addAttribute("employeeUserId", employeeUserId);
         model.addAttribute("firstReport", firstReport);
@@ -57,5 +57,12 @@ public class DamagesController {
     public String carHasNoDamages(@RequestParam int carId, @RequestParam int employeeUserId) {
         carService.changeCarToAvailable(carId);
         return "redirect:/mainMenuDamageAndRepair?employeeUserId=" + employeeUserId;
+    }
+
+    @PostMapping("/damageReportedToProcessed")
+    public String damageReportedToProcessed(@RequestParam int damageId, @RequestParam int employeeUserId) {
+        damageService.changeDamageFromReportedToProcessed(damageId);
+        return "redirect:/mainMenuDamageAndRepair?employeeUserId=" + employeeUserId;
+
     }
 }
