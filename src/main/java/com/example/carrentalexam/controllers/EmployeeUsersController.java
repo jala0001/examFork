@@ -96,9 +96,6 @@ public class EmployeeUsersController {
         }
 
 
-
-
-
         model.addAttribute("rentalContractCarsReturned", carsFromRentalContractsReturned);
         model.addAttribute("carsInMaintenanceWithDamages", carsInMaintenanceWithDamages);
         model.addAttribute("employeeUserId", employeeUserId);
