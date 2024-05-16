@@ -18,17 +18,24 @@ public class CustomersController {
     }
 
     @GetMapping("/createNewCustomer")
-    public String createNewCustomer(@RequestParam int employeeUserId, Model model) {
+    public String createNewCustomer(@RequestParam int employeeUserId, @RequestParam(required = false) String message, Model model) {
         model.addAttribute("employeeUserId", employeeUserId);
+        model.addAttribute("message", message);
         return "home/createNewCustomer";
     }
+
     @PostMapping("/createNewCustomerAction")
     public String createNewCustomer(@RequestParam String name, @RequestParam String address,
                                     @RequestParam String number, @RequestParam String email,
-                                    @RequestParam int employeeUserId) {
-        customerService.createNewCustomer(name, address, number, email);
-        return "redirect:/mainMenuDataRegistration?employeeUserId=" + employeeUserId; // redirectes til EmployeeUsersController
-
-
+                                    @RequestParam int employeeUserId, Model model) {
+        try {
+            customerService.createNewCustomer(name, address, number, email);
+            return "redirect:/createNewCustomer?employeeUserId=" + employeeUserId + "&message=Customer+has+been+created";
+        } catch (Exception e) {
+            return "redirect:/createNewCustomer?employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";
+        }
     }
+
+
+
 }

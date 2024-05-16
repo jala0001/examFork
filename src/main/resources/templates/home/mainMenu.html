@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Main menu</title>
+    <link rel="stylesheet" type="text/css" href="/mainMenu.css">
 </head>
 <body>
-<span th:text="'Velkommen til din profil, ' + ${employeeUser.getUsername()}"></span>
-
+<h1 th:text="'Velkommen til din profil, ' + ${employeeUser.getUsername()}"></h1>
 
 <span th:if="${employeeUser.getDepartment().name() == 'DATA_REGISTRATION'}"> <!-- EmployeeUserController -->
     <form action="/mainMenuDataRegistration" method="get">
@@ -27,8 +27,6 @@
         <button type="submit">You have access as business developer</button>
     </form>
 </span>
-
-
 
 </body>
 </html>

@@ -25,10 +25,11 @@ public class RentalContractsController {
     }
 
     @GetMapping("/createRentalContract")
-    public String createRentalContract(@RequestParam int employeeUserId, Model model) {
+    public String createRentalContract(@RequestParam int employeeUserId, @RequestParam(required = false) String message,  Model model) {
         model.addAttribute("employeeUserId", employeeUserId);
         model.addAttribute("customers", customerService.getAllCustomers()); // så vi har et overblik over eksisterende kunder når man opretter en lejekontrakt
         model.addAttribute("cars", carService.getAllCarsThatAreAvailable()); // så man ikke kan leje en bil som er udlejet i forvejen
+        model.addAttribute("message", message);
         return "home/createNewRentalContract";
     }
 
@@ -40,9 +41,14 @@ public class RentalContractsController {
                                        @RequestParam String conditionOnDelivery,
                                        @RequestParam String conditionUponReturn,
                                        @RequestParam int employeeUserId) {
-        rentalContractService.createRentalContract(customerId, carId, startDate, endDate, price,
-                pickUpLocation, conditionOnDelivery, conditionUponReturn);
+        try {
+            rentalContractService.createRentalContract(customerId, carId, startDate, endDate, price,
+                    pickUpLocation, conditionOnDelivery, conditionUponReturn);
 
-        return "redirect:/mainMenuDataRegistration?employeeUserId=" + employeeUserId; // Redirect til EmployeeUserController
+            return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Rental+contract+has+been+created."; // Redirect til EmployeeUserController
+        } catch (Exception e) {
+            return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";
+        }
+
     }
 }

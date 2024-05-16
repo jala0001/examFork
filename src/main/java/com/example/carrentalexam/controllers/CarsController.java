@@ -17,16 +17,23 @@ public class CarsController {
     }
 
     @GetMapping("/createNewCar")
-    public String createNewCar(@RequestParam int employeeUserId, Model model) {
+    public String createNewCar(@RequestParam int employeeUserId, @RequestParam(required = false) String message, Model model) {
         model.addAttribute("employeeUserId", employeeUserId);
+        model.addAttribute("message", message);
         return "home/createNewCar";
     }
     @PostMapping("/createNewCarAction")
     public String createNewCar(@RequestParam String frameNumber, @RequestParam String brand,
                                @RequestParam String model, @RequestParam String registrationNumber,
                                @RequestParam String status, @RequestParam int employeeUserId) {
-        carService.createNewCar(frameNumber, brand, model, registrationNumber, status);
-        return "redirect:/mainMenuDataRegistration?employeeUserId=" + employeeUserId; // redirectes til EmployeeUsersController
+        try {
+            carService.createNewCar(frameNumber, brand, model, registrationNumber, status);
+            return "redirect:/createNewCar?employeeUserId=" + employeeUserId + "&message=Car+has+been+created";
+        } catch (Exception e) {
+            return "redirect:/createNewCar?employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";
+
+        }
+
 
     }
 }
