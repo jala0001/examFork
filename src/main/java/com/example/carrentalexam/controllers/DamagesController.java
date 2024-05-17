@@ -13,7 +13,8 @@ public class DamagesController {
 
     private final CarService carService;
     private final DamageService damageService;
-    private boolean firstReport = true;
+    private int amountOfDamages = 0;
+
 
     public DamagesController(CarService carService ,DamageService damageService) {
         this.carService = carService;
@@ -30,11 +31,12 @@ public class DamagesController {
     }
 
     @GetMapping("/processCarYes")
-    public String carHasDamages(@RequestParam int carId, @RequestParam int rentalContractId ,@RequestParam int employeeUserId, Model model) {
+    public String carHasDamages(@RequestParam int carId, @RequestParam int rentalContractId ,@RequestParam int employeeUserId,
+                                @RequestParam(required = false) String message, Model model) {
         model.addAttribute("car", carService.getCarRented(carId));
         model.addAttribute("rentalContractId", rentalContractId);
         model.addAttribute("employeeUserId", employeeUserId);
-        model.addAttribute("firstReport", firstReport);
+        model.addAttribute("message", message);
     return "home/createDamageReport";
     }
 
@@ -42,9 +44,15 @@ public class DamagesController {
     public String carHasDamages(@RequestParam int rentalContractId, @RequestParam String descriptionOfDamage,
                                 @RequestParam double repairCosts, @RequestParam String status,
                                 @RequestParam int employeeUserId, @RequestParam int carId) {
-        damageService.createDamageReport(rentalContractId, descriptionOfDamage, repairCosts, status);
-        firstReport = false;
-        return "redirect:/processCarYes?carId=" + carId + "&rentalContractId=" + rentalContractId + "&employeeUserId=" + employeeUserId;
+        try {
+            damageService.createDamageReport(rentalContractId, descriptionOfDamage, repairCosts, status);
+            return "redirect:/processCarYes?carId=" + carId + "&rentalContractId=" +
+                    rentalContractId + "&employeeUserId=" + employeeUserId + "&message=Damage+report+has+been+created.+You+have+created:";
+        } catch (Exception e) {
+            return "redirect:/processCarYes?carId=" + carId + "&rentalContractId=" +
+                    rentalContractId + "&employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";
+        }
+
     }
 
     @PostMapping("/processCarComplete")
