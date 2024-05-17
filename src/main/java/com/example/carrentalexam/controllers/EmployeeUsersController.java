@@ -54,15 +54,23 @@ public class EmployeeUsersController {
     }
 
     @GetMapping("/signIn")
-    public String signIn() {
+    public String signIn(@RequestParam(required = false) String message, Model model) {
+        if (message != null) {
+            model.addAttribute("message", message);
+        }
         return "home/signIn";
     }
 
     @PostMapping("/signInAction")
     public String signInAction(@RequestParam String username, @RequestParam String password,
                                @RequestParam EmployeeUserDepartment employeeUserDepartment) {
-        employeeUserService.addEmployee(username, password, employeeUserDepartment);
-        return "redirect:/";
+        try {
+            employeeUserService.addEmployee(username, password, employeeUserDepartment);
+            return "redirect:/signIn?message=User+has+been+created.";
+        } catch (Exception e) {
+            return "redirect:/signIn?message=Something+went+wrong.+Username and password can max be 100 characters.";
+        }
+
     }
 
     @GetMapping("/mainMenuDataRegistration")
