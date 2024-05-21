@@ -31,15 +31,16 @@ public class RentalContractRepository {
 
     public List<Car> getRentedCarsCount() { // NY - ændret at den modtager CAR objekter og ikke RentalContract objekter
         String query = "SELECT * FROM cars where status = 'RENTED'";
-        RowMapper rowMapper = new BeanPropertyRowMapper(Car.class);
+        RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
-
     public double getTotalRevenue() { // NY - ændret så der kun returnes beløb fra kontrakter som er igangværende.
         String query = "SELECT SUM(price) FROM rental_contracts WHERE start_date <= CURDATE() AND end_date >= CURDATE()";
-        return jdbcTemplate.queryForObject(query, Double.class);
+        Double result = jdbcTemplate.queryForObject(query, Double.class);
+        return result != null ? result : 0.0;
     }
+
 
 
     public List<RentalContract> getAllRentalContractWhereTheCarHasBeenReturned() { // ÆNDRING 20-05

@@ -124,16 +124,27 @@ public class EmployeeUsersController {
 
 
 
-    @GetMapping("/mainMenuBusinessDeveloper") // NY
+    @GetMapping("/mainMenuBusinessDeveloper") // fejlHåndteret
     public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
-        model.addAttribute(employeeUserService.getEmployee(employeeUserId));
-        model.addAttribute("employeeUserId", employeeUserId);
-        // int rentedCarsCount = rentalContractService.getRentedCarsCount();
-        List<Car> rentedCars = rentalContractService.getRentedCarsCount(); // ændret at den modtager CAR objekter og ikke RentalContract objekter
-        double totalRevenue = rentalContractService.getTotalRevenue();
-        model.addAttribute("rentedCarsCount", rentedCars.size());
-        model.addAttribute("totalRevenue", totalRevenue);
-        return "home/mainMenuBusinessDeveloper";
+        try {
+
+            List<Car> rentedCars = rentalContractService.getRentedCarsCount(); // ændret at den modtager CAR objekter og ikke RentalContract objekter
+            double totalRevenue = rentalContractService.getTotalRevenue();
+
+            model.addAttribute(employeeUserService.getEmployee(employeeUserId));
+            model.addAttribute("employeeUserId", employeeUserId);
+            model.addAttribute("rentedCarsCount", rentedCars.size());
+            model.addAttribute("totalRevenue", totalRevenue);
+
+            return "home/mainMenuBusinessDeveloper";
+        } catch (NullPointerException e) {
+            model.addAttribute("error", "Data not found or incomplete data");
+            return "redirect:/mainMenuBusinessDeveloper?employeeUserId=" + employeeUserId;
+        } catch (Exception e) {
+            model.addAttribute("error", "An unexpected error occurred: " + e.getMessage());
+            return "redirect:/mainMenuBusinessDeveloper?employeeUserId=" + employeeUserId;
+        }
     }
+
 
 }
