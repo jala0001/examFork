@@ -80,7 +80,7 @@ public class EmployeeUsersController {
         return "home/mainMenuDataRegistration";
     }
 
-    @GetMapping("/mainMenuDamageAndRepair")
+    @GetMapping("/mainMenuDamageAndRepair") // ÆNDRING 20-05-2024
     public String damageAndRepair(@RequestParam int employeeUserId, Model model) {
         List<RentalContract> rentalContractsReturned = rentalContractService.getAllRentalContractWhereTheCarHasBeenReturned();
         List<CarWithContract> carsFromRentalContractsReturned = new ArrayList<>();
@@ -88,11 +88,21 @@ public class EmployeeUsersController {
         for (RentalContract contract : rentalContractsReturned) {
             Car car = carService.getCarRented(contract.getCarId());
             if (car != null) {
-                carsFromRentalContractsReturned.add(new CarWithContract(car, contract.getRentalContractId()));
+                boolean carAlreadyInList = false;
+                for (CarWithContract carWithContract : carsFromRentalContractsReturned) {
+                    if (carWithContract.getCar().getCarId() == (car.getCarId())) {
+                        carAlreadyInList = true;
+                        break;
+                    }
+                }
+                if (!carAlreadyInList) {
+                    carsFromRentalContractsReturned.add(new CarWithContract(car, contract.getRentalContractId()));
+                }
             }
         }
 
-        List<RentalContract> allRentalContracts = rentalContractService.getAllRentalContracts();
+
+        List<RentalContract> allRentalContracts = rentalContractService.getAllRentalContractsThatsActive();
         List<CarWithContract> carsInMaintenanceWithDamages = new ArrayList<>();
 
         for (RentalContract contract : allRentalContracts) {
@@ -122,7 +132,7 @@ public class EmployeeUsersController {
         model.addAttribute(employeeUserService.getEmployee(employeeUserId));
         model.addAttribute("employeeUserId", employeeUserId);
         // int rentedCarsCount = rentalContractService.getRentedCarsCount();
-        List<RentalContract> rentedCars = rentalContractService.getRentedCarsCount();
+        List<Car> rentedCars = rentalContractService.getRentedCarsCount(); // ændret at den modtager CAR objekter og ikke RentalContract objekter
         double totalRevenue = rentalContractService.getTotalRevenue();
         model.addAttribute("rentedCarsCount", rentedCars.size());
         model.addAttribute("totalRevenue", totalRevenue);
