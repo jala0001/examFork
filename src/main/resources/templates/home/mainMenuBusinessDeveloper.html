@@ -12,5 +12,6 @@
     <p>Total rented cars: <span th:text="${rentedCarsCount}"></span></p>
     <p>Total revenue: <span th:text="${totalRevenue}"></span></p>
 </div>
+<p th:if="${error}" th:text="${error}"></p>
 </body>
 </html>
