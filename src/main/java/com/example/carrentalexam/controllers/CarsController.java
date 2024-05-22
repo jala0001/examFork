@@ -24,10 +24,10 @@ public class CarsController {
     }
     @PostMapping("/createNewCarAction")
     public String createNewCar(@RequestParam String frameNumber, @RequestParam String brand,
-                               @RequestParam String model, @RequestParam String registrationNumber,
+                               @RequestParam String model, @RequestParam int monthlyPrice, @RequestParam String registrationNumber,
                                @RequestParam String status, @RequestParam int employeeUserId) {
         try {
-            carService.createNewCar(frameNumber, brand, model, registrationNumber, status);
+            carService.createNewCar(frameNumber, brand, model, monthlyPrice, registrationNumber, status);
             return "redirect:/createNewCar?employeeUserId=" + employeeUserId + "&message=Car+has+been+created";
         } catch (Exception e) {
             return "redirect:/createNewCar?employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";

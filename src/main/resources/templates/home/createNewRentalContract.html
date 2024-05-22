@@ -13,38 +13,41 @@
         <label for="customerId">Customer:</label>
         <select id="customerId" name="customerId" required>
             <option value="">--Vælg en kunde--</option>
-            <option th:each="customer : ${customers}" th:value="${customer.customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option>
+            <option th:each="customer : ${customers}" th:value="${customer.customerId}"
+                    th:selected="${customer.customerId == customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option>
         </select>
     </div>
     <div>
         <label for="carId">Car:</label>
         <select id="carId" name="carId" required>
             <option value="">--Vælg en bil--</option>
-            <option th:each="car : ${cars}" th:value="${car.carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option>
+            <option th:each="car : ${cars}" th:value="${car.carId}"
+                    th:selected="${car.carId == carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option>
         </select>
     </div>
     <div>
         <label for="startDate">Start date</label>
-        <input type="date" id="startDate" name="startDate" required>
+        <input type="date" id="startDate" name="startDate" required th:value="${startDate}">
     </div>
     <div>
         <label for="endDate">End date</label>
-        <input type="date" id="endDate" name="endDate" required>
+        <input type="date" id="endDate" name="endDate" required th:value="${endDate}">
     </div>
     <div>
-        <label for="price">Price - max 7 digits</label>
-        <input type="text" id="price" name="price" required>
+        <label for="price">Price</label>
+        <input type="text" id="price" name="price" required readonly th:value="${price}">
     </div>
     <div>
         <label for="pickUpLocation">Pick up location</label>
-        <input type="text" id="pickUpLocation" name="pickUpLocation" required>
+        <input type="text" id="pickUpLocation" name="pickUpLocation" required th:value="${pickUpLocation}">
     </div>
     <div>
         <label for="conditionOnDelivery">Condition on delivery</label>
-        <input type="text" id="conditionOnDelivery" name="conditionOnDelivery" required>
+        <input type="text" id="conditionOnDelivery" name="conditionOnDelivery" required th:value="${conditionOnDelivery}">
     </div>
     <input type="hidden" name="conditionUponReturn" value="to be determined">
     <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <button type="submit" formaction="/calculatePrice">Calculate price</button>
     <button type="submit">Submit</button>
 </form>
 <td th:if="${message}" th:text="${message}">Rental contract has been created.</td>

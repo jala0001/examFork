@@ -25,10 +25,10 @@ public class CarRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void createNewCar(String frameNumber, String brand, String model, String registrationNumber, String status) {
-        String query = "insert into cars(frame_number, brand, model, registration_number, status)" +
-                "values(?, ?, ?, ?, ?);";
-        jdbcTemplate.update(query, frameNumber, brand, model, registrationNumber, status);
+    public void createNewCar(String frameNumber, String brand, String model, int monthlyPrice, String registrationNumber, String status) {
+        String query = "insert into cars(frame_number, brand, model, monthly_price, registration_number, status)" +
+                "values(?, ?, ?, ?, ?, ?);";
+        jdbcTemplate.update(query, frameNumber, brand, model, monthlyPrice, registrationNumber, status);
     }
 
     public void updateCarStatus(int carId, String status) { // NY
@@ -82,5 +82,11 @@ public class CarRepository {
     }
 
 
+    public double getMonthlyPriceForCar(int carId) {
+        String query = "SELECT monthly_price FROM cars WHERE car_id = ?;";
+        // Anvendelse af queryForObject til at hente en enkelt værdi
+        Double price = jdbcTemplate.queryForObject(query, new Object[]{carId}, Double.class);
+        return price != null ? price : 0.0;  // Håndtering af null værdi, hvis ingen pris findes
+    }
 
 }

@@ -16,8 +16,8 @@ public class CarService {
         return carRepository.getAllCars();
     }
 
-    public void createNewCar(String frameNumber, String brand, String model, String registrationNumber, String status) {
-        carRepository.createNewCar(frameNumber, brand, model, registrationNumber, status);
+    public void createNewCar(String frameNumber, String brand, String model, int monthlyPrice, String registrationNumber, String status) {
+        carRepository.createNewCar(frameNumber, brand, model, monthlyPrice, registrationNumber, status);
     }
 
 
@@ -43,5 +43,10 @@ public class CarService {
 
     public List<Car> getAllCarsThatAreAvailable() {
         return carRepository.getAllCarsThatAreAvailabe();
+    }
+
+
+    public double getMonthlyPriceForCar(int carId) {
+        return carRepository.getMonthlyPriceForCar(carId);
     }
 }

@@ -12,6 +12,7 @@
     <td>Frame number - max 50 characters</td><td><input type="text" name="frameNumber" required></td>
     <td>Brand</td><td><input type="text" name="brand" required></td>
     <td>Model</td><td><input type="text" name="model" required></td>
+    <td>Monthly price</td><td><input type="number" name="monthlyPrice" required></td>
     <td>Registration number - max 10 characters</td><td><input type="text" name="registrationNumber" required></td>
     <input type="hidden" name="status" value="AVAILABLE"> <!-- ENUM værdi og tænker umiddelbart at bilen er available fra start når den bliver oprettet. Men det kan diskuteres -->
     <input type="hidden" name="employeeUserId" th:value="${employeeUserId}"> <!-- så man kan redirect -->

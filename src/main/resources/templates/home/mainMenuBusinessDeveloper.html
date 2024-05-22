@@ -13,5 +13,9 @@
     <p>Total revenue: <span th:text="${totalRevenue}"></span></p>
 </div>
 <p th:if="${error}" th:text="${error}"></p>
+<br>
+<form action="/" method="get">
+    <button type="submit">Log out</button>
+</form>
 </body>
 </html>
