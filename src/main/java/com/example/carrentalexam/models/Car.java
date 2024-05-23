@@ -7,6 +7,7 @@ public class Car {
     private String frameNumber;
     private String brand;
     private String model;
+    private double monthlyPrice;
     private String registrationNumber;
     private CarStatus status;
 
@@ -43,6 +44,14 @@ public class Car {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public double getMonthlyPrice() {
+        return monthlyPrice;
+    }
+
+    public void setMonthlyPrice(double monthlyPrice) {
+        this.monthlyPrice = monthlyPrice;
     }
 
     public String getRegistrationNumber() {

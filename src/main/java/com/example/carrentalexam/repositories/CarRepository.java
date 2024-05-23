@@ -43,13 +43,13 @@ public class CarRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, rentalContractCarId);
     }
 
-   /* public Car getCar(int carId) {
+    public Car getCar(int carId) {
         String query = "SELECT * FROM cars WHERE car_id = ?;";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return jdbcTemplate.queryForObject(query, rowMapper, carId);
     }
 
-    */
+
 
     public Car getCarRented(int carId) {
         String query = "SELECT * FROM cars WHERE car_id = ? AND status = 'RENTED';";
@@ -89,4 +89,14 @@ public class CarRepository {
         return price != null ? price : 0.0;  // Håndtering af null værdi, hvis ingen pris findes
     }
 
+    public void updateCar(String frameNumber, String brand, String model, double monthlyPrice, String registrationNumber, String status, int carId) {
+        String query = "update cars set frame_number = ?, brand = ?, model = ?, monthly_price = ?, registration_number = ?, status = ? where car_id = ?;";
+        jdbcTemplate.update(query, frameNumber, brand, model, monthlyPrice, registrationNumber, status, carId);
+    }
+
+
+    public void deleteCar(int carId) {
+        String query = "delete from cars where car_id = ?;";
+        jdbcTemplate.update(query, carId);
+    }
 }

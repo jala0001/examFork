@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update customer</title>
+    <link rel="stylesheet" type="text/css" href="/updateCustomer.css">
+
+</head>
+<body>
+<h1>Update car</h1>
+<h2 th:if="${message}" th:text="${message}"></h2>
+<form action="/mainMenuDataRegistration">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <button type="submit">Go back to main menu</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Car ID</th>
+        <th>Frame number</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Monthly price</th>
+        <th>registration number</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <form action="/updateCarAction" method="post">
+            <td th:text="${car.carId}"></td>
+            <td><input type="text" name="frameNumber" th:value="${car.frameNumber}"></td>
+            <td><input type="text" name="brand" th:value="${car.brand}"></td>
+            <td><input type="text"  name="model" th:value="${car.model}"></td>
+            <td><input type="number" name="monthlyPrice" th:value="${car.monthlyPrice}" min="0" max="9999999"></td>
+            <td><input type="text" name="registrationNumber" th:value="${car.registrationNumber}"></td>
+            <td><input type="text" name="status" th:value="${car.status}" readonly></td>
+            <td>
+                <input type="hidden"  name="carId" th:value="${car.carId}">
+                <input type="hidden"  name="employeeUserId" th:value="${employeeUserId}">
+                <button type="submit">Save changes</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

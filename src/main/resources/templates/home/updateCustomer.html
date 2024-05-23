@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update customer</title>
+    <link rel="stylesheet" type="text/css" href="/updateCustomer.css">
+
+</head>
+<body>
+<h1>Update customer</h1>
+<h2 th:if="${message}" th:text="${message}"></h2>
+<form action="/mainMenuDataRegistration">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <button type="submit">Go back to main menu</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Customer ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Number</th>
+        <th>E-mail</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <form action="/updateCustomerAction" method="post">
+        <td th:text="${customer.customerId}"></td>
+        <td><input type="text" name="name" th:value="${customer.name}"></td>
+        <td><input type="text" name="address" th:value="${customer.address}"></td>
+        <td><input type="text"  name="number" th:value="${customer.number}"></td>
+        <td><input type="email" name="email" th:value="${customer.email}"></td>
+        <td>
+
+                <input type="hidden"  name="customerId" th:value="${customer.customerId}">
+                <input type="hidden"  name="employeeUserId" th:value="${employeeUserId}">
+                <button type="submit">Save changes</button>
+
+        </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

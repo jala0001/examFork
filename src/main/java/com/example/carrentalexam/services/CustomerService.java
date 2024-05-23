@@ -18,4 +18,19 @@ public class CustomerService {
     public List<Customer> getAllCustomers() {
         return customerRepository.getAllCustomers();
     }
+
+
+    public void updateCustomer(String name, String address, String number, String email, int customerId) {
+        customerRepository.updateCustomer(name, address, number, email, customerId);
+    }
+
+
+    public void deleteCustomer(int customerId) {
+        customerRepository.deleteCustomer(customerId);
+    }
+
+    public Customer getCustomer(int customerId) {
+        return customerRepository.getCustomer(customerId);
+
+    }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update customer</title>
+    <link rel="stylesheet" type="text/css" href="/updateCustomer.css">
+
+</head>
+<body>
+<h1>Delete car</h1>
+<h2 th:if="${message}" th:text="${message}"></h2>
+<form action="/mainMenuDataRegistration">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <button type="submit">Go back to main menu</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Car ID</th>
+        <th>Frame number</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Monthly price</th>
+        <th>registration number</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <form action="/deleteCarConfirm" method="get">
+            <td th:text="${car.carId}"></td>
+            <td th:text="${car.frameNumber}"></td>
+            <td th:text="${car.brand}"></td>
+            <td th:text="${car.model}"></td>
+            <td th:text="${car.monthlyPrice}"></td>
+            <td th:text="${car.registrationNumber}"></td>
+            <td th:text="${car.status}"></td>
+            <td>
+                <input type="hidden"  name="carId" th:value="${car.carId}">
+                <input type="hidden"  name="employeeUserId" th:value="${employeeUserId}">
+                <button type="submit">Delete car</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

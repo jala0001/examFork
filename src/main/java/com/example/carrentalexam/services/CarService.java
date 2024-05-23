@@ -49,4 +49,16 @@ public class CarService {
     public double getMonthlyPriceForCar(int carId) {
         return carRepository.getMonthlyPriceForCar(carId);
     }
+
+    public void updateCar(String frameNumber, String brand, String model, double monthlyPrice, String registrationNumber, String status, int carId) {
+        carRepository.updateCar(frameNumber, brand, model, monthlyPrice, registrationNumber, status, carId);
+    }
+
+    public Car getCar(int carId) {
+        return carRepository.getCar(carId);
+    }
+
+    public void deleteCar(int carId) {
+        carRepository.deleteCar(carId);
+    }
 }

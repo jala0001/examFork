@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update customer</title>
+    <link rel="stylesheet" type="text/css" href="/updateCustomer.css">
+
+</head>
+<body>
+<h1>Update customer</h1>
+<h2 th:if="${message}" th:text="${message}"></h2>
+<form action="/mainMenuDataRegistration">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <button type="submit">Go back to main menu</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Customer ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Number</th>
+        <th>E-mail</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <form action="/deleteCustomerConfirm" method="get">
+            <td th:text="${customer.customerId}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.address}"></td>
+            <td th:text="${customer.number}"></td>
+            <td th:text="${customer.email}"></td>
+            <td>
+                <input type="hidden"  name="customerId" th:value="${customer.customerId}">
+                <input type="hidden"  name="employeeUserId" th:value="${employeeUserId}">
+                <button type="submit">Delete customer</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
