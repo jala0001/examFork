@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete rental contract</title>
+    <link rel="stylesheet" type="text/css" href="/updateCustomer.css">
+
+</head>
+<body>
+<h1>Delete rental contract</h1>
+<h2 th:if="${message}" th:text="${message}"></h2>
+<form action="/mainMenuDataRegistration">
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
+    <button type="submit">Go back to main menu</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Rental contract ID</th>
+        <th>Customer ID</th>
+        <th>Car ID</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Price</th>
+        <th>Pick up location</th>
+        <th>Condition on delivery</th>
+        <th>Condition upon return</th>
+        <th>Is rental contract ended?</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rentalContract : ${rentalContracts}">
+        <form action="/deleteRentalContractConfirm" method="get">
+            <td th:text="${rentalContract.rentalContractId}"></td>
+            <td th:text="${rentalContract.customerId}"></td>
+            <td th:text="${rentalContract.carId}"></td>
+            <td th:text="${rentalContract.startDate}"></td>
+            <td th:text="${rentalContract.endDate}"></td>
+            <td th:text="${rentalContract.price}"></td>
+            <td th:text="${rentalContract.pickUpLocation}"></td>
+            <td th:text="${rentalContract.conditionOnDelivery}"></td>
+            <td th:text="${rentalContract.conditionUponReturn}"></td>
+            <td th:text="${rentalContract.isRentalContractEnded}"></td>
+            <td>
+                <input type="hidden"  name="rentalContractId" th:value="${rentalContract.rentalContractId}">
+                <input type="hidden"  name="employeeUserId" th:value="${employeeUserId}">
+                <button type="submit">Delete rental contract</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

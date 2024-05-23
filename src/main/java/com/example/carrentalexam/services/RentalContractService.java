@@ -64,4 +64,12 @@ public class RentalContractService {
     public void changeConditionUponReturnToDamaged(int rentalContractId) {
         rentalContractRepository.changeConditionUponReturnToDamaged(rentalContractId);
     }
+
+    public List<RentalContract> getAllRentalContracts() {
+        return rentalContractRepository.getAllRentalContracts();
+    }
+
+    public void deleteRentalContract(int rentalContractId) {
+        rentalContractRepository.deleteRentalContract(rentalContractId);
+    }
 }

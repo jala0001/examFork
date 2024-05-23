@@ -20,14 +20,13 @@
     <input type="hidden" name="employeeUserId" th:value="${employeeUser.getEmployeeUserId()}"> <!-- employeeUserId sendes med så man senere kan redirect -->
     <button type="submit">Create new car</button>
     <button type="submit" formaction="/updateCar">Update car</button> <!-- DONE -->
-    <button type="submit" formaction="/deleteCar">Delete car</button>
+    <button type="submit" formaction="/deleteCar">Delete car</button> <!-- DONE -->
 </form>
 <br>
 <form action="/createRentalContract" method="get">
     <input type="hidden" name="employeeUserId" th:value="${employeeUser.getEmployeeUserId()}"> <!-- employeeUserId sendes med så man senere kan redirect -->
     <button type="submit">Create new rental contract</button>
-    <button type="submit" formaction="/calculatePrice">Update rental contract</button>
-    <button type="submit" formaction="/calculatePrice">Delete rental contract</button>
+    <button type="submit" formaction="/deleteRentalContract">Delete rental contract</button>
 </form>
 
 <br>

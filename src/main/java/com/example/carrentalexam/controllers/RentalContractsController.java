@@ -1,5 +1,9 @@
 package com.example.carrentalexam.controllers;
 
+import com.example.carrentalexam.models.Car;
+import com.example.carrentalexam.models.CarBrandComparator;
+import com.example.carrentalexam.models.Customer;
+import com.example.carrentalexam.models.CustomerNameComparator;
 import com.example.carrentalexam.services.CarService;
 import com.example.carrentalexam.services.CustomerService;
 import com.example.carrentalexam.services.RentalContractService;
@@ -13,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class RentalContractsController {
@@ -30,8 +36,12 @@ public class RentalContractsController {
     @GetMapping("/createRentalContract")
     public String createRentalContract(@RequestParam int employeeUserId, @RequestParam(required = false) String message,  Model model) {
         model.addAttribute("employeeUserId", employeeUserId);
-        model.addAttribute("customers", customerService.getAllCustomers()); // så vi har et overblik over eksisterende kunder når man opretter en lejekontrakt
-        model.addAttribute("cars", carService.getAllCarsThatAreAvailable()); // så man ikke kan leje en bil som er udlejet i forvejen
+        List<Customer> customers = customerService.getAllCustomers();
+        List<Car> cars = carService.getAllCarsThatAreAvailable();
+        Collections.sort(customers, new CustomerNameComparator()); // sortere i listen med kunder.
+        Collections.sort(cars, new CarBrandComparator()); // sortere i listen med biler.
+        model.addAttribute("customers", customers);
+        model.addAttribute("cars", cars);
         model.addAttribute("message", message);
         return "home/createNewRentalContract";
     }
@@ -84,5 +94,26 @@ public class RentalContractsController {
         return "redirect:/createRentalContract?employeeUserId=" + employeeUserId;
     }
 
+    @GetMapping("/deleteRentalContract")
+    public String deleteRentalContract(@RequestParam int employeeUserId, @RequestParam (required = false) String message, Model model) {
+        model.addAttribute("rentalContracts", rentalContractService.getAllRentalContracts());
+        model.addAttribute("employeeUserId", employeeUserId);
+        return "home/deleteRentalContract";
+
+    }
+
+    @GetMapping("/deleteRentalContractConfirm")
+    public String deleteRentalContractConfirm(@RequestParam int rentalContractId, @RequestParam int employeeUserId, Model model) {
+        model.addAttribute("rentalContract", rentalContractService.getRentalContract(rentalContractId));
+        model.addAttribute("employeeUserId", employeeUserId);
+        return "home/deleteRentalContractConfirm";
+    }
+
+    @PostMapping("/deleteRentalContractAction")
+    public String deleteRentalContract(@RequestParam int rentalContractId, @RequestParam int employeeUserId, @RequestParam int carId) {
+        rentalContractService.deleteRentalContract(rentalContractId);
+        carService.changeCarToAvailable(carId);
+        return "redirect:/deleteRentalContract?employeeUserId=" + employeeUserId + "&message=Rental+contract+has+been+deleted";
+    }
 
 }

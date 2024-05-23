@@ -13,6 +13,7 @@ public class RentalContract {
     private String pickUpLocation;
     private String conditionOnDelivery;
     private String conditionUponReturn;
+    private String isRentalContractEnded;
 
     public RentalContract() {
     }
@@ -87,5 +88,13 @@ public class RentalContract {
 
     public void setConditionUponReturn(String conditionUponReturn) {
         this.conditionUponReturn = conditionUponReturn;
+    }
+
+    public String getIsRentalContractEnded() {
+        return isRentalContractEnded;
+    }
+
+    public void setIsRentalContractEnded(String isRentalContractEnded) {
+        this.isRentalContractEnded = isRentalContractEnded;
     }
 }

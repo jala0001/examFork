@@ -77,4 +77,15 @@ public class RentalContractRepository {
         String query = "update rental_contracts set condition_upon_return = 'had one or more damages' where rental_contract_id = ?;";
         jdbcTemplate.update(query, rentalContractId);
     }
+
+    public List<RentalContract> getAllRentalContracts() {
+        String query = "SELECT * FROM rental_contracts";
+        RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
+        return jdbcTemplate.query(query, rowMapper);
+    }
+
+    public void deleteRentalContract(int rentalContractId) {
+        String query = "delete from rental_contracts where rental_contract_id = ?;";
+        jdbcTemplate.update(query, rentalContractId);
+    }
 }
