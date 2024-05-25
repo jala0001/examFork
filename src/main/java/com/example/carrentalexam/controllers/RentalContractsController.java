@@ -38,8 +38,8 @@ public class RentalContractsController {
         model.addAttribute("employeeUserId", employeeUserId);
         List<Customer> customers = customerService.getAllCustomers();
         List<Car> cars = carService.getAllCarsThatAreAvailable();
-        Collections.sort(customers, new CustomerNameComparator()); // sortere i listen med kunder.
-        Collections.sort(cars, new CarBrandComparator()); // sortere i listen med biler.
+        Collections.sort(customers, new CustomerNameComparator());
+        Collections.sort(cars, new CarBrandComparator());
         model.addAttribute("customers", customers);
         model.addAttribute("cars", cars);
         model.addAttribute("message", message);

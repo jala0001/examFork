@@ -35,7 +35,7 @@ public class RentalContractRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public double getTotalRevenue() { // NY - ændret så der kun returnes beløb fra kontrakter som er igangværende.
+    public double getTotalRevenue() {
         String query = "SELECT SUM(price) FROM rental_contracts WHERE start_date <= CURDATE() AND end_date >= CURDATE()";
         Double result = jdbcTemplate.queryForObject(query, Double.class);
         return result != null ? result : 0.0;

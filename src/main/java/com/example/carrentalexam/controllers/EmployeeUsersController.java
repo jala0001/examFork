@@ -124,11 +124,11 @@ public class EmployeeUsersController {
 
 
 
-    @GetMapping("/mainMenuBusinessDeveloper") // fejlHåndteret
+    @GetMapping("/mainMenuBusinessDeveloper")
     public String businessDeveloper(@RequestParam int employeeUserId, Model model) {
         try {
 
-            List<Car> rentedCars = rentalContractService.getRentedCarsCount(); // ændret at den modtager CAR objekter og ikke RentalContract objekter
+            List<Car> rentedCars = rentalContractService.getRentedCarsCount();
             double totalRevenue = rentalContractService.getTotalRevenue();
 
             model.addAttribute(employeeUserService.getEmployee(employeeUserId));
