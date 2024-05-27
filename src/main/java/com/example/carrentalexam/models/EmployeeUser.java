@@ -9,7 +9,11 @@ public class EmployeeUser {
     private EmployeeUserDepartment department;
 
     public EmployeeUser() {
+
     }
+
+
+
 
     public int getEmployeeUserId() {
         return employeeUserId;

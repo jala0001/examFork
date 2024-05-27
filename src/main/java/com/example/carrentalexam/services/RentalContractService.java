@@ -16,13 +16,13 @@ public class RentalContractService {
     @Autowired
     private RentalContractRepository rentalContractRepository;
     @Autowired
-    private CarRepository carRepository; // NY
+    private CarRepository carRepository;
 
-    public RentalContractService(RentalContractRepository rentalContractRepository) { // NY
+    public RentalContractService(RentalContractRepository rentalContractRepository) {
         this.rentalContractRepository = rentalContractRepository;
     }
 
-    public void createRentalContract(int customerId, int carId, LocalDate startDate, // NY
+    public void createRentalContract(int customerId, int carId, LocalDate startDate,
                                      LocalDate endDate, double price, String pickUpLocation,
                                      String conditionOnDelivery, String conditionUponReturn) {
 
@@ -45,7 +45,7 @@ public class RentalContractService {
         return rentalContractRepository.getAllRentalContractWhereTheCarHasBeenReturned();
     }
 
-    public List<RentalContract> getAllRentalContractsThatsActive() { // NAVNEÆNDRING 20-05
+    public List<RentalContract> getAllRentalContractsThatsActive() {
         return rentalContractRepository.getAllRentalContractsThatsActive();
     }
 
@@ -53,11 +53,11 @@ public class RentalContractService {
         rentalContractRepository.concludeContract(rentalContractId);
     }
 
-    public RentalContract getRentalContract(int rentalContractId) { // tilføjelse 20-05
+    public RentalContract getRentalContract(int rentalContractId) {
         return rentalContractRepository.getRentalContract(rentalContractId);
     }
 
-    public void changeConditionUponReturn(int rentalContractId) { // tilføjelse 20-05
+    public void changeConditionUponReturn(int rentalContractId) {
         rentalContractRepository.changeConditionUponReturn(rentalContractId);
     }
 

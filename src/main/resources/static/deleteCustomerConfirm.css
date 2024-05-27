@@ -38,7 +38,7 @@ td {
 }
 
 .form-inline {
-    display: inline-block; /* Makes the forms align horizontally */
+    display: inline-block;
 }
 
 button {
@@ -52,7 +52,7 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
-    margin-right: 5px; /* Adds some space between buttons */
+    margin-right: 5px;
 }
 
 button:hover {

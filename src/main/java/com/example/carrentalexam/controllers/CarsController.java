@@ -17,7 +17,7 @@ public class CarsController {
     }
 
     @GetMapping("/createNewCar")
-    public String createNewCar(@RequestParam int employeeUserId, @RequestParam(required = false) String message, Model model) {
+    public String createNewCar(@RequestParam int employeeUserId, @RequestParam(required = false) String message, Model model) { // "String message" forventes ikke og bliver kun vist på createNewCar-siden når en bil er oprettet eller hvis en fejl opstod.
         model.addAttribute("employeeUserId", employeeUserId);
         model.addAttribute("message", message);
         return "home/createNewCar";
@@ -38,7 +38,7 @@ public class CarsController {
 
     @GetMapping("/updateCar")
     public String updateCar(@RequestParam int employeeUserId, @RequestParam (required = false) String message, Model model) {
-        model.addAttribute("cars", carService.getAllCarsThatAreAvailable()); // så vi ikke kan lave ændringer på udlejede biler.
+        model.addAttribute("cars", carService.getAllCarsThatAreAvailable());
         model.addAttribute("employeeUserId", employeeUserId);
         model.addAttribute("message", message);
         return "home/updateCar";
@@ -58,7 +58,7 @@ public class CarsController {
 
     @GetMapping("/deleteCar")
     public String deleteCar(@RequestParam int employeeUserId, @RequestParam (required = false) String message, Model model) {
-        model.addAttribute("cars", carService.getAllCarsThatAreAvailable()); // igen så man kun kan slette biler der ikke er udlejet.
+        model.addAttribute("cars", carService.getAllCarsThatAreAvailable());
         model.addAttribute("employeeUserId", employeeUserId);
         model.addAttribute("message", message);
         return "home/deleteCar";

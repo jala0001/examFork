@@ -14,7 +14,7 @@
         <select id="customerId" name="customerId" required>
             <option value="">--Vælg en kunde--</option>
             <option th:each="customer : ${customers}" th:value="${customer.customerId}"
-                    th:selected="${customer.customerId == customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option>
+                    th:selected="${customer.customerId == customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option> <!-- Viser kunden som brugeren valgte før de trykkede på knappen som opdaterer prisen for lejeaftalen -->
         </select>
     </div>
     <div>
@@ -22,7 +22,7 @@
         <select id="carId" name="carId" required>
             <option value="">--Vælg en bil--</option>
             <option th:each="car : ${cars}" th:value="${car.carId}"
-                    th:selected="${car.carId == carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option>
+                    th:selected="${car.carId == carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option> <!-- samme som ovenstående kommentar, bare med bil. -->
         </select>
     </div>
     <div>

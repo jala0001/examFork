@@ -7,23 +7,23 @@ public class CarWithContract {
     private int rentalContractId;
     private List<Damage> damages;
 
-    // Tom konstruktør
+
     public CarWithContract() {
     }
 
-    // Konstruktør med parametre
-    public CarWithContract(Car car, int rentalContractId) {
+
+    public CarWithContract(Car car, int rentalContractId) { // bruges til listen af biler som skal behandles, men hvor evt skader endnu ikke er oprettet.
         this.car = car;
         this.rentalContractId = rentalContractId;
     }
 
-    public CarWithContract(Car car, int rentalContractId, List<Damage> damages) {
+    public CarWithContract(Car car, int rentalContractId, List<Damage> damages) { // Bruges til listen af biler hvor skader er blevet registreret.
         this.car = car;
         this.rentalContractId = rentalContractId;
         this.damages = damages;
     }
 
-    // Getter og setter for 'car'
+
     public Car getCar() {
         return car;
     }
@@ -32,7 +32,7 @@ public class CarWithContract {
         this.car = car;
     }
 
-    // Getter og setter for 'rentalContractId'
+
     public int getRentalContractId() {
         return rentalContractId;
     }

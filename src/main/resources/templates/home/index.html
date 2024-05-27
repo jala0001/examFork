@@ -9,7 +9,7 @@
 
 <h1>K.W. Bruun & Co</h1>
 
-<form action="/login" method="post"> <!-- EmployeeUsersController -->
+<form action="/login" method="post">
     <table>
         <tr>
             <td>Username</td>
@@ -23,10 +23,10 @@
     <button type="submit">Log in</button>
 </form>
 
-<div th:if="${WrongPassword}" th:text="${WrongPassword}"></div> <!-- Sendes fra /login i EmployeeUserController -->
-<div th:if="${UserDoesNotExist}" th:text="${UserDoesNotExist}"></div> <!-- Sendes fra /login i EmployeeUserController -->
+<div th:if="${WrongPassword}" th:text="${WrongPassword}"></div>
+<div th:if="${UserDoesNotExist}" th:text="${UserDoesNotExist}"></div>
 
-<form action="/signIn" method="get"> <!-- EmployeeUsersController -->
+<form action="/signIn" method="get">
     <button type="submit">Sign in</button>
 </form>
 

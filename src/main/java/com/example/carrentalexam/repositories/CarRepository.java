@@ -38,7 +38,7 @@ public class CarRepository {
 
 
     public Car getAllCarsReturned(int rentalContractCarId) {
-        String query = "SELECT * FROM cars WHERE car_id = ? AND status = 'RENTED';"; // tilføjet status = RENTED, så bilen kun kommer frem før den er blevet processed.
+        String query = "SELECT * FROM cars WHERE car_id = ? AND status = 'RENTED';";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return jdbcTemplate.queryForObject(query, rowMapper, rentalContractCarId);
     }
@@ -57,7 +57,7 @@ public class CarRepository {
         try {
             return jdbcTemplate.queryForObject(query, rowMapper, carId);
         } catch (EmptyResultDataAccessException e) {
-            return null;  // Returnerer null, hvis der ikke findes nogen bil med det specificerede ID
+            return null;
         }
     }
     public Car getCarMaintenance(int carId) {
@@ -84,7 +84,6 @@ public class CarRepository {
 
     public double getMonthlyPriceForCar(int carId) {
         String query = "SELECT monthly_price FROM cars WHERE car_id = ?;";
-        // Anvendelse af queryForObject til at hente en enkelt værdi
         Double price = jdbcTemplate.queryForObject(query, new Object[]{carId}, Double.class);
         return price != null ? price : 0.0;  // Håndtering af null værdi, hvis ingen pris findes
     }

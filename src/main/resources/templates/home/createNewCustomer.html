@@ -13,7 +13,7 @@
     <td>Address</td><td><input type="text" name="address" required></td>
     <td>Phone number</td><td><input type="text" name="number" required></td>
     <td>E-mail</td><td><input type="text" name="email" required></td>
-    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}"> <!-- så man kan redirect -->
+    <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
     <button type="submit">Submit</button>
 </form>
 <td th:if="${message}" th:text="${message}">Customer has been created.</td>

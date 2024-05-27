@@ -23,12 +23,12 @@ public class EmployeeUsersController {
     private final RentalContractService rentalContractService;
     private final DamageService damageService;
 
-    // Som patty sagde til vores fremlæggelse er det vigtigt at vi bruger konstruktør i stedet for autowired for at sikre immutabilitet.
+
     public EmployeeUsersController(EmployeeUserService employeeUserService, CarService carService,
                                    RentalContractService rentalContractService, DamageService damageService) {
         this.employeeUserService = employeeUserService;
         this.carService = carService;
-        this.rentalContractService = rentalContractService; // NY
+        this.rentalContractService = rentalContractService;
         this.damageService = damageService;
     }
 
@@ -75,17 +75,17 @@ public class EmployeeUsersController {
 
     @GetMapping("/mainMenuDataRegistration")
     public String dataRegistration(@RequestParam int employeeUserId, Model model) {
-        model.addAttribute(employeeUserService.getEmployee(employeeUserId)); // for at få brugerens navn til overskriften
-        model.addAttribute(carService.getAllCars()); // Giver medarbejderen overblik over alle registrerede biler
+        model.addAttribute(employeeUserService.getEmployee(employeeUserId));
+        model.addAttribute(carService.getAllCars());
         return "home/mainMenuDataRegistration";
     }
 
-    @GetMapping("/mainMenuDamageAndRepair") // ÆNDRING 20-05-2024
+    @GetMapping("/mainMenuDamageAndRepair")
     public String damageAndRepair(@RequestParam int employeeUserId, Model model) {
         List<RentalContract> rentalContractsReturned = rentalContractService.getAllRentalContractWhereTheCarHasBeenReturned();
         List<CarWithContract> carsFromRentalContractsReturned = new ArrayList<>();
 
-        for (RentalContract contract : rentalContractsReturned) {
+        for (RentalContract contract : rentalContractsReturned) { // Tjekker igennem for biler som er klar til at blive behandlet
             Car car = carService.getCarRented(contract.getCarId());
             if (car != null) {
                 boolean carAlreadyInList = false;
@@ -105,7 +105,7 @@ public class EmployeeUsersController {
         List<RentalContract> allRentalContracts = rentalContractService.getAllRentalContractsThatsActive();
         List<CarWithContract> carsInMaintenanceWithDamages = new ArrayList<>();
 
-        for (RentalContract contract : allRentalContracts) {
+        for (RentalContract contract : allRentalContracts) { // Tjekker igennem biler som har skader og er klar til at blive udbedret
             Car car = carService.getCarMaintenance(contract.getCarId());
             if (car != null) {
                 List<Damage> damages = damageService.getDamagesByContractId(contract.getRentalContractId());

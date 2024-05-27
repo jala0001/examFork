@@ -28,7 +28,7 @@ td {
 }
 input[type="text"],
 input[type="password"] {
-    width: calc(100% - 10px); /* Subtract padding */
+    width: calc(100% - 10px);
     padding: 8px;
     margin-top: 5px;
     border: 1px solid #ccc;

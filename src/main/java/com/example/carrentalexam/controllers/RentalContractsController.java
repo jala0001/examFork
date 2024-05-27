@@ -58,7 +58,7 @@ public class RentalContractsController {
             rentalContractService.createRentalContract(customerId, carId, startDate, endDate, price,
                     pickUpLocation, conditionOnDelivery, conditionUponReturn);
 
-            return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Rental+contract+has+been+created."; // Redirect til EmployeeUserController
+            return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Rental+contract+has+been+created.";
         } catch (Exception e) {
             return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";
         }
@@ -71,7 +71,7 @@ public class RentalContractsController {
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @RequestParam("employeeUserId") int employeeUserId,
-            @RequestParam("customerId") int customerId,  // Antag at dette også sendes fra formen
+            @RequestParam("customerId") int customerId,
             @RequestParam("pickUpLocation") String pickUpLocation,
             @RequestParam("conditionOnDelivery") String conditionOnDelivery,
             RedirectAttributes redirectAttributes) {
@@ -81,7 +81,7 @@ public class RentalContractsController {
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
         double priceForRentalContract = pricePerDay * daysBetween;
 
-        // Tilføjer den beregnede pris og alle andre indtastede værdier til RedirectAttributes
+
         redirectAttributes.addFlashAttribute("price", priceForRentalContract);
         redirectAttributes.addFlashAttribute("customerId", customerId);
         redirectAttributes.addFlashAttribute("carId", carId);
@@ -90,7 +90,7 @@ public class RentalContractsController {
         redirectAttributes.addFlashAttribute("pickUpLocation", pickUpLocation);
         redirectAttributes.addFlashAttribute("conditionOnDelivery", conditionOnDelivery);
         redirectAttributes.addFlashAttribute("employeeUserId", employeeUserId);
-
+        // redirectAttribues.addFlashAttribute bruges til at allerede indtastede data forbliver på siden efter brugeren for systemet til at udregne den samlede pris.
         return "redirect:/createRentalContract?employeeUserId=" + employeeUserId;
     }
 

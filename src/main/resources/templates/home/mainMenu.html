@@ -8,7 +8,7 @@
 <body>
 <h1 th:text="'Velkommen til din profil, ' + ${employeeUser.getUsername()}"></h1>
 
-<span th:if="${employeeUser.getDepartment().name() == 'DATA_REGISTRATION'}"> <!-- EmployeeUserController -->
+<span th:if="${employeeUser.getDepartment().name() == 'DATA_REGISTRATION'}">
     <form action="/mainMenuDataRegistration" method="get">
         <input type="hidden" name="employeeUserId" th:value="${employeeUser.getEmployeeUserId()}">
         <button type="submit">You have access to data registration</button>

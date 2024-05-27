@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="carWithContract : ${rentalContractCarsReturned}">
+            <tr th:each="carWithContract : ${rentalContractCarsReturned}"> <!-- listen har adgang til alle bil informationer samt kontrakt ID'et -->
                 <td th:text="${carWithContract.rentalContractId}"></td>
                 <td th:text="${carWithContract.car.carId}"></td>
                 <td th:text="${carWithContract.car.frameNumber}"></td>
@@ -47,7 +47,7 @@
             </thead>
             <tbody>
             <tr th:each="carWithContract : ${carsInMaintenanceWithDamages}">
-                <td th:text="${carWithContract.rentalContractId}"></td> <!-- tilføjelse -->
+                <td th:text="${carWithContract.rentalContractId}"></td>
                 <td th:text="${carWithContract.car.carId}"></td>
                 <td th:text="${carWithContract.car.frameNumber}"></td>
                 <td th:text="${carWithContract.car.brand}"></td>
@@ -55,12 +55,12 @@
                 <td th:text="${carWithContract.car.registrationNumber}"></td>
                 <td th:text="${carWithContract.car.status}"></td>
                 <td>
-                    <div th:each="damage : ${carWithContract.damages}">
+                    <div th:each="damage : ${carWithContract.damages}"> <!-- listen har adgang til alle skader som er registeret på en bil i den specifikke lejekontrakt -->
                         <p th:text="${damage.descriptionOfDamage} + '. Status: ' + ${damage.damageStatus}"></p>
                         <form action="/damageReportedToProcessed" method="post">
                             <input type="hidden" name="damageId" th:value="${damage.damageId}">
                             <input type="hidden" name="employeeUserId" th:value="${employeeUserId}">
-                            <button th:if="${damage.damageStatus.name() == 'REPORTED'}" type="submit">Repair damage</button>
+                            <button th:if="${damage.damageStatus.name() == 'REPORTED'}" type="submit">Repair damage</button> <!-- knappen forsvinder efter og skaden går fra REPORTED til PROCESSED -->
                         </form>
                     </div>
                 </td>

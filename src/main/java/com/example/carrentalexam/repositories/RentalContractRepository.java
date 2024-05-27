@@ -23,13 +23,13 @@ public class RentalContractRepository {
 
     public void createRentalContract(int customerId, int carId, LocalDate startDate, LocalDate endDate, double price, String pickUpLocation, String conditionOnDelivery, String conditionUponReturn) {
         String query = "insert into rental_contracts(customer_id, car_id, start_date, end_date, " +
-                "price, pick_up_location, condition_on_delivery, condition_upon_return, is_rental_contract_ended)" + // ÆNDRING 20-05
+                "price, pick_up_location, condition_on_delivery, condition_upon_return, is_rental_contract_ended)" +
                 "values(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        jdbcTemplate.update(query, customerId, carId, startDate, endDate, price, pickUpLocation, conditionOnDelivery, conditionUponReturn, "no");
+        jdbcTemplate.update(query, customerId, carId, startDate, endDate, price, pickUpLocation, conditionOnDelivery, conditionUponReturn, "no"); // "no" er hardcodet til at kontrakten ikke er afsluttet.
     }
 
 
-    public List<Car> getRentedCarsCount() { // NY - ændret at den modtager CAR objekter og ikke RentalContract objekter
+    public List<Car> getRentedCarsCount() {
         String query = "SELECT * FROM cars where status = 'RENTED'";
         RowMapper<Car> rowMapper = new BeanPropertyRowMapper<>(Car.class);
         return jdbcTemplate.query(query, rowMapper);
@@ -43,32 +43,32 @@ public class RentalContractRepository {
 
 
 
-    public List<RentalContract> getAllRentalContractWhereTheCarHasBeenReturned() { // ÆNDRING 20-05
+    public List<RentalContract> getAllRentalContractWhereTheCarHasBeenReturned() {
         String query = "SELECT * FROM rental_contracts WHERE end_date < CURDATE() AND is_rental_contract_ended = 'no';";
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
 
-    public List<RentalContract> getAllRentalContractsThatsActive() { // ÆNDRING 20-05
+    public List<RentalContract> getAllRentalContractsThatsActive() {
         String query = "select * from rental_contracts where is_rental_contract_ended = 'no';";
         RowMapper rowMapper = new BeanPropertyRowMapper(RentalContract.class);
         return jdbcTemplate.query(query, rowMapper);
 
     }
 
-    public void concludeContract(int rentalContractId) { // tilføjelse 20-05
+    public void concludeContract(int rentalContractId) {
         String query = "update rental_contracts set is_rental_contract_ended = 'yes' where rental_contract_id = ?;";
         jdbcTemplate.update(query, rentalContractId);
     }
 
-    public RentalContract getRentalContract(int rentalContractId) { // tilføjelse 20-05
+    public RentalContract getRentalContract(int rentalContractId) {
         String query = "Select * from rental_contracts where rental_contract_id = ?;";
         RowMapper<RentalContract> rowMapper = new BeanPropertyRowMapper<>(RentalContract.class);
         return jdbcTemplate.queryForObject(query, rowMapper, rentalContractId);
     }
 
-    public void changeConditionUponReturn(int rentalContractId) { // tilføjelse 20-05
+    public void changeConditionUponReturn(int rentalContractId) {
         String query = "update rental_contracts set condition_upon_return = 'same condition as before' where rental_contract_id = ?;";
         jdbcTemplate.update(query, rentalContractId);
     }
