@@ -1,0 +1,66 @@
+create database car_rental_group_5;
+use car_rental_group_5;
+
+CREATE USER IF NOT EXISTS 'car_rental_user'@'localhost' IDENTIFIED BY 'STÅR EFTER FORSIDEN PÅ RAPPORTEN';
+GRANT USAGE ON *.* TO 'car_rental_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON car_rental_group_5.* TO 'car_rental_user'@'localhost';
+
+
+create table customers(
+customer_id int primary key auto_increment,
+name varchar(100),
+address varchar(100),
+number varchar(15),
+email varchar(50)
+);
+
+create table cars(
+car_id int primary key auto_increment,
+frame_number varchar(50) unique,
+brand varchar(50),
+model varchar(50),
+monthly_price decimal(7,2),
+registration_number varchar(10) unique,
+status enum('RENTED', 'AVAILABLE', 'MAINTENANCE')
+);
+
+create table rental_contracts(
+rental_contract_id int primary key auto_increment,
+customer_id int,
+foreign key (customer_id) references customers (customer_id)
+on delete cascade on update cascade,
+car_id int,
+foreign key (car_id) references cars (car_id)
+on delete cascade on update cascade,
+start_date date,
+end_date date,
+price decimal(7,2),
+pick_up_location varchar(100),
+condition_on_delivery varchar(1000),
+condition_upon_return varchar(1000),
+is_rental_contract_ended varchar(3)
+);
+
+create table damages(
+damage_id int primary key auto_increment,
+rental_contract_id int,
+foreign key (rental_contract_id) references rental_contracts (rental_contract_id)
+on delete cascade on update cascade,
+description_of_damage varchar(2500),
+repair_costs decimal(7,2),
+damage_status enum('REPORTED', 'PROCESSED')
+);
+
+create table reports(
+report_id int primary key auto_increment,
+date date,
+number_of_rented_cars int,
+total_revenue decimal(11,2)
+);
+
+create table employee_users(
+employee_user_id int primary key auto_increment,
+username varchar(100),
+password varchar(100),
+department enum('DATA_REGISTRATION', 'DAMAGE_AND_REPAIR', 'BUSINESS_DEVELOPERS')
+);
