@@ -64,3 +64,46 @@ username varchar(100),
 password varchar(100),
 department enum('DATA_REGISTRATION', 'DAMAGE_AND_REPAIR', 'BUSINESS_DEVELOPERS')
 );
+
+insert into cars values(default, "A3F45D3B9123", "Toyota", "Corolla", 3500, "AB12345", "available");
+insert into cars values(default, "B4T56E4C8234", "Honda", "Civic", 3200, "CD23456", "available");
+insert into cars values(default, "C5U67F5D7345", "Ford", "Mustang", 4200, "EF34567", "available");
+insert into cars values(default, "D6V78G6E6456", "Audi", "A4", 4500, "GH45678", "available");
+insert into cars values(default, "E7W89H7F5567", "Mercedes", "C-Class", 4700, "IJ56789", "available");
+insert into cars values(default, "F8X90I8G4678", "Volkswagen", "Golf", 3500, "KL67890", "available");
+insert into cars values(default, "G9Y01J9H3789", "Nissan", "Altima", 3200, "MN78901", "available");
+insert into cars values(default, "H0Z12K0I2890", "Chevrolet", "Impala", 3300, "OP89012", "available");
+insert into cars values(default, "I1A23L1J1901", "Kia", "Optima", 3300, "QR90123", "available");
+insert into cars values(default, "J2B34M2K0123", "Hyundai", "Sonata", 3400, "ST01234", "available");
+insert into cars values(default, "K3C45N3L9234", "Mazda", "3", 3400, "UV92345", "available");
+insert into cars values(default, "L4D56O4M8345", "Tesla", "Model S", 5800, "WX83456", "available");
+insert into cars values(default, "M5E67P5N7456", "Jaguar", "XE", 5100, "YZ74567", "available");
+insert into cars values(default, "N6F78Q6O6567", "Lexus", "IS", 4600, "ZA65678", "available");
+insert into cars values(default, "O7G89R7P5678", "BMW", "i8", 6200, "BC56789", "available");
+insert into cars values(default, "P8H90S8Q4789", "Porsche", "911", 6500, "DE47890", "available");
+insert into cars values(default, "Q9I01T9R3890", "Ferrari", "488", 7000, "FG38901", "available");
+insert into cars values(default, "R0J12U0S2901", "Lamborghini", "Huracan", 7200, "HI29012", "available");
+insert into cars values(default, "S1K23V1T1012", "Aston Martin", "DB11", 6600, "JK10123", "available");
+
+
+insert into customers
+values(default, "Bente Nielsen", "Gladsaxevej 12", "+4534814277", "benteNielsen@hotmail.com");
+insert into customers values(default, "Mads Mikkelsen", "Finsensvej 6B", "+4523569874", "madsM@hotmail.com");
+insert into customers values(default, "Hanne Sørensen", "Marielundsvej 17", "+4512345678", "hanneS123@gmail.com");
+insert into customers values(default, "Lars Hansen", "Jernbanevej 24", "+4545678912", "larsHansen@mail.dk");
+insert into customers values(default, "Sofie Graversen", "Strandvejen 45", "+4529896754", "sofieG@live.dk");
+insert into customers values(default, "Niels Bohr", "Atomvej 99", "+4515956234", "nielsB@gmail.com");
+insert into customers values(default, "Anne Mette Rasmussen", "Skolegade 13", "+4516758493", "anneMR@outlook.com");
+insert into customers values(default, "Jesper Knudsen", "Møllevej 8", "+4534678901", "jesperK78@gmail.com");
+insert into customers values(default, "Karoline Dahl", "Parkvej 76", "+4523334445", "karolineD@gmail.com");
+insert into customers values(default, "Erik Poulsen", "Lindevej 12", "+4545667788", "erikP@yahoo.com");
+insert into customers values(default, "Sara Petersen", "Birkevej 45", "+4522445566", "saraPete@hotmail.com");
+insert into customers values(default, "Jonas Gregersen", "Ahornvej 89", "+4533322211", "jonasG@live.com");
+insert into customers values(default, "Charlotte Lind", "Hybenvej 3", "+4544455566", "charlotteL@hotmail.com");
+insert into customers values(default, "Mathias Borg", "Granvej 2", "+4511223344", "mathiasB@outlook.com");
+insert into customers values(default, "Lilly Jensen", "Egevej 5", "+4555666777", "lillyJ@gmail.com");
+insert into customers values(default, "John Smith", "2111 Arch St", "+1215567890", "johnSmith@usa.com");
+insert into customers values(default, "Emma Brown", "19 Front St", "+441234567890", "emmaB@ukmail.com");
+insert into customers values(default, "Carlos Diaz", "Calle Luna 47", "+349876543210", "carlosD@esmail.com");
+insert into customers values(default, "Sophie Martin", "Rue de Paris 56", "+33123456789", "sophieM@frmail.com");
+insert into customers values(default, "Luca Rossi", "Via Roma 123", "+390612345678", "lucaR@itmail.com");
