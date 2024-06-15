@@ -23,8 +23,8 @@
     <button type="submit">Log in</button>
 </form>
 
-<div th:if="${WrongPassword}" th:text="${WrongPassword}"></div>
-<div th:if="${UserDoesNotExist}" th:text="${UserDoesNotExist}"></div>
+<div th:if="${loginError}" th:text="${loginError}"></div>
+<!-- <div th:if="${UserDoesNotExist}" th:text="${UserDoesNotExist}"></div> -->
 
 <form action="/signIn" method="get">
     <button type="submit">Sign in</button>

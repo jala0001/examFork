@@ -33,24 +33,15 @@ public class EmployeeUsersController {
     }
 
     @PostMapping("/login")
-    public String logIn(@RequestParam String username, @RequestParam String password,
-                        Model model) {
-        List<EmployeeUser> employeeUsers = employeeUserService.getAllEmployees();
-        for (int i = 0; i < employeeUsers.size(); i++) {
-            if (employeeUsers.get(i).getUsername().equals(username)) {
-                if (employeeUsers.get(i).getPassword().equals(password)) {
-                    int employeeId = employeeUsers.get(i).getEmployeeUserId();
-                    model.addAttribute(employeeUserService.getEmployee(employeeId));
-                    return "home/mainMenu";
-                }
-                else {
-                    model.addAttribute("WrongPassword", "Wrong password");
-                    return "home/index";
-                }
-            }
+    public String logIn(@RequestParam String username, @RequestParam String password, Model model) {
+        EmployeeUser user = employeeUserService.authenticateUser(username, password);
+        if (user != null) {
+            model.addAttribute("employeeUser", user);
+            return "home/mainMenu";
+        } else {
+            model.addAttribute("loginError", "Invalid username or password");
+            return "home/index";
         }
-        model.addAttribute("UserDoesNotExist", "user does not exist");
-        return "home/index";
     }
 
     @GetMapping("/signIn")
@@ -130,11 +121,17 @@ public class EmployeeUsersController {
 
             List<Car> rentedCars = rentalContractService.getRentedCarsCount();
             double totalRevenue = rentalContractService.getTotalRevenue();
+            List<CustomerCarAndRentalContract> customerCarAndRentalContracts = rentalContractService.getAllCustomerCarAndRentalContract();
+            List<Car> carsThatAreAvailable = carService.getAllCarsThatAreAvailable();
+           // List<Car> carsThatAreMaintenance = carService.getAllCarsThatAreMaintenance();
 
             model.addAttribute(employeeUserService.getEmployee(employeeUserId));
             model.addAttribute("employeeUserId", employeeUserId);
             model.addAttribute("rentedCarsCount", rentedCars.size());
             model.addAttribute("totalRevenue", totalRevenue);
+            model.addAttribute("customerCarAndRentalContracts", customerCarAndRentalContracts);
+            model.addAttribute("carsThatAreAvailable", carsThatAreAvailable);
+           // model.addAttribute("carsThatAreMaintenance", carsThatAreMaintenance);
 
             return "home/mainMenuBusinessDeveloper";
         } catch (NullPointerException e) {

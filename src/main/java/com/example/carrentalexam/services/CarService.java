@@ -61,4 +61,8 @@ public class CarService {
     public void deleteCar(int carId) {
         carRepository.deleteCar(carId);
     }
+
+    public List<Car> getAllCarsThatAreMaintenance() {
+        return carRepository.getAllCarsThatAreMaintenance();
+    }
 }

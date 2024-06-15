@@ -28,4 +28,16 @@ public class EmployeeUserService {
     public EmployeeUser getEmployee(int employeeId) {
         return employeeUserRepository.getEmployee(employeeId);
     }
+
+    public EmployeeUser authenticateUser(String username, String password) {
+        List<EmployeeUser> employeeUsers = getAllEmployees();
+        for (EmployeeUser user : employeeUsers) {
+            if (user.getUsername().equals(username)) {
+                if (user.getPassword().equals(password)) {
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -14,7 +14,7 @@
         <select id="customerId" name="customerId" required>
             <option value="">--Vælg en kunde--</option>
             <option th:each="customer : ${customers}" th:value="${customer.customerId}"
-                    th:selected="${customer.customerId == customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option> <!-- Viser kunden som brugeren valgte før de trykkede på knappen som opdaterer prisen for lejeaftalen -->
+                    th:selected="${customer.customerId == customerId}" th:text="${customer.name} + ' - ' + ${customer.address}"></option>
         </select>
     </div>
     <div>
@@ -22,7 +22,7 @@
         <select id="carId" name="carId" required>
             <option value="">--Vælg en bil--</option>
             <option th:each="car : ${cars}" th:value="${car.carId}"
-                    th:selected="${car.carId == carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option> <!-- samme som ovenstående kommentar, bare med bil. -->
+                    th:selected="${car.carId == carId}" th:text="${car.brand} + ' ' + ${car.model} + ' (' + ${car.registrationNumber} + ')'"></option>
         </select>
     </div>
     <div>
@@ -38,8 +38,13 @@
         <input type="text" id="price" name="price" required readonly th:value="${price}">
     </div>
     <div>
-        <label for="pickUpLocation">Pick up location</label>
-        <input type="text" id="pickUpLocation" name="pickUpLocation" required th:value="${pickUpLocation}">
+        <label for="locationId">Pick up location</label>
+        <select id="locationId" name="locationId" required>
+            <option value="">--Vælg en opsamlingsplads--</option>
+            <option th:each="location : ${locations}" th:value="${location.locationId}"
+                    th:selected="${location.locationId == locationId}" th:text="${location.description}"></option>
+        </select>
+
     </div>
     <div>
         <label for="conditionOnDelivery">Condition on delivery</label>

@@ -2,6 +2,8 @@ package com.example.carrentalexam.services;
 
 import com.example.carrentalexam.enums.CarStatus;
 import com.example.carrentalexam.models.Car;
+import com.example.carrentalexam.models.CustomerCarAndRentalContract;
+import com.example.carrentalexam.models.Location;
 import com.example.carrentalexam.models.RentalContract;
 import com.example.carrentalexam.repositories.CarRepository;
 import com.example.carrentalexam.repositories.RentalContractRepository;
@@ -23,11 +25,11 @@ public class RentalContractService {
     }
 
     public void createRentalContract(int customerId, int carId, LocalDate startDate,
-                                     LocalDate endDate, double price, String pickUpLocation,
+                                     LocalDate endDate, double price, int pickUpLocation, // Æ
                                      String conditionOnDelivery, String conditionUponReturn) {
 
         rentalContractRepository.createRentalContract(customerId, carId, startDate, endDate, price,
-                pickUpLocation, conditionOnDelivery, conditionUponReturn);
+                pickUpLocation, conditionOnDelivery, conditionUponReturn); // Æ
 
         carRepository.updateCarStatus(carId, CarStatus.RENTED.name());
     }
@@ -71,5 +73,13 @@ public class RentalContractService {
 
     public void deleteRentalContract(int rentalContractId) {
         rentalContractRepository.deleteRentalContract(rentalContractId);
+    }
+
+    public List<Location> getAllLocations() {
+       return rentalContractRepository.getAllLocations();
+    }
+
+    public List<CustomerCarAndRentalContract> getAllCustomerCarAndRentalContract() {
+        return rentalContractRepository.getAllCustomerCarAndRentalContracts();
     }
 }

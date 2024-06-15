@@ -1,7 +1,6 @@
 package com.example.carrentalexam.models;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class RentalContract {
     private int rentalContractId;
@@ -10,7 +9,7 @@ public class RentalContract {
     private LocalDate startDate;
     private LocalDate endDate;
     private double price;
-    private String pickUpLocation;
+    private int locationId;  // Ændret fra String pickUpLocation til int locationId
     private String conditionOnDelivery;
     private String conditionUponReturn;
     private String isRentalContractEnded;
@@ -18,6 +17,7 @@ public class RentalContract {
     public RentalContract() {
     }
 
+    // Getters and setters for all fields
     public int getRentalContractId() {
         return rentalContractId;
     }
@@ -66,12 +66,12 @@ public class RentalContract {
         this.price = price;
     }
 
-    public String getPickUpLocation() {
-        return pickUpLocation;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setPickUpLocation(String pickUpLocation) {
-        this.pickUpLocation = pickUpLocation;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public String getConditionOnDelivery() {

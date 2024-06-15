@@ -18,7 +18,6 @@ class RentalContractTest {
         rentalContract.setStartDate(LocalDate.of(2023, 5, 1));
         rentalContract.setEndDate(LocalDate.of(2023, 6, 1));
         rentalContract.setPrice(1000.00);
-        rentalContract.setPickUpLocation("Downtown");
         rentalContract.setConditionOnDelivery("Good");
         rentalContract.setConditionUponReturn("Fair");
         rentalContract.setIsRentalContractEnded("No");
@@ -54,10 +53,6 @@ class RentalContractTest {
         assertEquals(1000.00, rentalContract.getPrice(), 0.01, "Price should be 1000.00");
     }
 
-    @Test
-    void testGetPickUpLocation() {
-        assertEquals("Downtown", rentalContract.getPickUpLocation(), "Pick up location should be 'Downtown'");
-    }
 
     @Test
     void testGetConditionOnDelivery() {

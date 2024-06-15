@@ -1,9 +1,6 @@
 package com.example.carrentalexam.controllers;
 
-import com.example.carrentalexam.models.Car;
-import com.example.carrentalexam.models.CarBrandComparator;
-import com.example.carrentalexam.models.Customer;
-import com.example.carrentalexam.models.CustomerNameComparator;
+import com.example.carrentalexam.models.*;
 import com.example.carrentalexam.services.CarService;
 import com.example.carrentalexam.services.CustomerService;
 import com.example.carrentalexam.services.RentalContractService;
@@ -38,32 +35,31 @@ public class RentalContractsController {
         model.addAttribute("employeeUserId", employeeUserId);
         List<Customer> customers = customerService.getAllCustomers();
         List<Car> cars = carService.getAllCarsThatAreAvailable();
+        List<Location> locations = rentalContractService.getAllLocations();
         Collections.sort(customers, new CustomerNameComparator());
         Collections.sort(cars, new CarBrandComparator());
         model.addAttribute("customers", customers);
         model.addAttribute("cars", cars);
+        model.addAttribute("locations", locations);
         model.addAttribute("message", message);
         return "home/createNewRentalContract";
     }
 
     @PostMapping("/createNewRentalContractAction")
     public String createRentalContract(@RequestParam int customerId, @RequestParam int carId,
-                                       @RequestParam LocalDate startDate,
-                                       @RequestParam LocalDate endDate, @RequestParam double price,
-                                       @RequestParam String pickUpLocation,
-                                       @RequestParam String conditionOnDelivery,
-                                       @RequestParam String conditionUponReturn,
+                                       @RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
+                                       @RequestParam double price, @RequestParam int locationId,
+                                       @RequestParam String conditionOnDelivery, @RequestParam String conditionUponReturn,
                                        @RequestParam int employeeUserId) {
         try {
             rentalContractService.createRentalContract(customerId, carId, startDate, endDate, price,
-                    pickUpLocation, conditionOnDelivery, conditionUponReturn);
-
+                    locationId, conditionOnDelivery, conditionUponReturn);
             return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Rental+contract+has+been+created.";
         } catch (Exception e) {
             return "redirect:/createRentalContract?employeeUserId=" + employeeUserId + "&message=Something+went+wrong.+Please+try+agian.";
         }
-
     }
+
 
     @PostMapping("/calculatePrice")
     public String calculatePrice(
@@ -72,27 +68,28 @@ public class RentalContractsController {
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             @RequestParam("employeeUserId") int employeeUserId,
             @RequestParam("customerId") int customerId,
-            @RequestParam("pickUpLocation") String pickUpLocation,
+            @RequestParam("locationId") int locationId, // Ændret fra 'pickUpLocation' til 'locationId'
             @RequestParam("conditionOnDelivery") String conditionOnDelivery,
             RedirectAttributes redirectAttributes) {
 
         double monthlyPrice = carService.getMonthlyPriceForCar(carId);
-        double pricePerDay = monthlyPrice / 30;
+        double pricePerDay = monthlyPrice / 30; // Antager at der er 30 dage i en måned for enkelheds skyld
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
         double priceForRentalContract = pricePerDay * daysBetween;
 
-
+        // Tilføj alle nødvendige attributter til redirectAttributes
         redirectAttributes.addFlashAttribute("price", priceForRentalContract);
         redirectAttributes.addFlashAttribute("customerId", customerId);
         redirectAttributes.addFlashAttribute("carId", carId);
         redirectAttributes.addFlashAttribute("startDate", startDate.toString());
         redirectAttributes.addFlashAttribute("endDate", endDate.toString());
-        redirectAttributes.addFlashAttribute("pickUpLocation", pickUpLocation);
+        redirectAttributes.addFlashAttribute("locationId", locationId); // Opdateret til at bruge 'locationId'
         redirectAttributes.addFlashAttribute("conditionOnDelivery", conditionOnDelivery);
         redirectAttributes.addFlashAttribute("employeeUserId", employeeUserId);
-        // redirectAttribues.addFlashAttribute bruges til at allerede indtastede data forbliver på siden efter brugeren for systemet til at udregne den samlede pris.
+
         return "redirect:/createRentalContract?employeeUserId=" + employeeUserId;
     }
+
 
     @GetMapping("/deleteRentalContract")
     public String deleteRentalContract(@RequestParam int employeeUserId, @RequestParam (required = false) String message, Model model) {

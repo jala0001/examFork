@@ -98,4 +98,10 @@ public class CarRepository {
         String query = "delete from cars where car_id = ?;";
         jdbcTemplate.update(query, carId);
     }
+
+    public List<Car> getAllCarsThatAreMaintenance() {
+        String query = "select * from cars where status = MAINTENANCE;";
+        RowMapper rowMapper = new BeanPropertyRowMapper(Car.class);
+        return jdbcTemplate.query(query, rowMapper);
+    }
 }

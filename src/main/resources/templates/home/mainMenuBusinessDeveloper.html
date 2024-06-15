@@ -3,19 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Business Developer</title>
-    <link rel="stylesheet" type="text/css" href="/mainMenuBusinessDeveloper.css">
+    <link rel="stylesheet" type="text/css" href="/updateCustomer.css">
 </head>
 <body>
-<h1 th:text="'Employee: ' + ${employeeUser.getUsername()}"></h1>
-<h2>Business Developer</h2>
-<div>
-    <p>Total rented cars: <span th:text="${rentedCarsCount}"></span></p>
-    <p>Total revenue: <span th:text="${totalRevenue}"></span></p>
-</div>
+<header>
+    <h1 th:text="'Employee: ' + ${employeeUser.getUsername()}"></h1>
+    <h2>Business Developer</h2>
+    <div id="summary">
+        <p>Total rented cars: <span th:text="${rentedCarsCount}"></span></p>
+        <p>Total revenue: <span th:text="${totalRevenue}"></span></p>
+    </div>
+</header>
+<main>
+    <section id="rental-contracts">
+        <h3>All rental contracts:</h3>
+        <table>
+            <thead><tr><td>Customer name</td><td>Car brand</td><td>Start date</td><td>End date</td><td>Starts in x days</td><td>Ends in x days</td></tr></thead>
+            <tbody th:each="customerCarAndRentalContract : ${customerCarAndRentalContracts}">
+            <tr>
+                <td th:text="${customerCarAndRentalContract.name}"></td>
+                <td th:text="${customerCarAndRentalContract.brand}"></td>
+                <td th:text="${customerCarAndRentalContract.startDate}"></td>
+                <td th:text="${customerCarAndRentalContract.endDate}"></td>
+                <td th:text="${customerCarAndRentalContract.startsInXDays >= 0 ? customerCarAndRentalContract.startsInXDays : 'already started'}"></td>
+                <td th:text="${customerCarAndRentalContract.endsInXDays >= 0 ? customerCarAndRentalContract.endsInXDays : 'is expired'}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section id="available-cars">
+        <h4>Cars that are available:</h4>
+        <table>
+            <thead><tr><td>Car ID</td><td>Car brand</td><td>Registration number</td></tr></thead>
+            <tbody th:each="car : ${carsThatAreAvailable}">
+            <tr>
+                <td th:text="${car.carId}"></td>
+                <td th:text="${car.brand}"></td>
+                <td th:text="${car.registrationNumber}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--
+    <section id="maintenance-cars">
+        <p>Cars that are in maintenance:</p>
+        <table>
+            <thead><tr><td>Car ID</td><td>Car brand</td><td>Registration number</td></tr></thead>
+            <tbody th:each="carMaintenance : ${carsThatAreMaintenance}">
+            <tr>
+                <td th:text="${carMaintenance.carId}"></td>
+                <td th:text="${carMaintenance.brand}"></td>
+                <td th:text="${carMaintenance.registrationNumber}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    -->
+</main>
+<footer>
+    <form action="/" method="get">
+        <button type="submit">Log out</button>
+    </form>
+</footer>
 <p th:if="${error}" th:text="${error}"></p>
-<br>
-<form action="/" method="get">
-    <button type="submit">Log out</button>
-</form>
 </body>
 </html>
